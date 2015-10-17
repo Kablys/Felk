@@ -63,7 +63,7 @@ public class Main {
                         i += 2;
                         break;
                     } else{
-                        result.add(new Token(Lexeme.EXEPTION, "Undefined value after &: " + input.charAt(i + 1)));
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after & " + '\'' + input.charAt(i + 1) + '\''));
                         i++;
                         break;
                     }

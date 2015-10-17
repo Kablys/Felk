@@ -32,5 +32,7 @@ public enum Lexeme {
     RETURN,
     TO,
     DOWNTO,
+    ANDOP,
+    EXEPTION,
     }
 

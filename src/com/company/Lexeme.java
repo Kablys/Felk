@@ -7,7 +7,7 @@ public enum Lexeme {
     RPAREN,
     LBRACKET,
     RBRACKET,
-    ATOM,
+    IDENTIFIER,
     SEMICOLON,
     PLUS,
     MINUS,

@@ -64,6 +64,17 @@ public class Main {
             return s.substring(i, j);
         }
     }
+    public static String getString(String s, int i) {
+        int j = i;
+            for( ; j < s.length(); ) {
+                if(s.charAt(j) == '"') {
+                    return s.substring(i, j+1);
+                } else {
+                    j++;
+                }
+            }
+            return s.substring(i, j);
+    }
 
     public static List<Token> lex(String input) {
         List<Token> result = new ArrayList<Token>();
@@ -161,6 +172,12 @@ public class Main {
 
 //                Single Symblos
 
+                case '"':
+
+                    String string = getString(input, i+1);
+                    result.add(new Token(Lexeme.STRING, '"' + string));
+                    i += string.length() + 1;
+                    break;
                 case '(':
                     result.add(new Token(Lexeme.LPAREN, "("));
                     i++;
@@ -202,16 +219,6 @@ public class Main {
                     result.add(new Token(Lexeme.COMMA, ","));
                     i++;
                     break;
-
-//                String
-
-
-
-                case '"':
-                    result.add(new Token(Lexeme.COMMA, ","));
-                    i++;
-                    break;
-
 //                    Text
 
                 default:
@@ -229,7 +236,7 @@ public class Main {
                         }
                         if(!TYPO) {
                             i += atom.length();
-                            result.add(new Token(Lexeme.ATOM, atom));
+                            result.add(new Token(Lexeme.IDENTIFIER, atom));
                         }
                     } else {
                         i++;

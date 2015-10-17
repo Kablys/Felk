@@ -18,7 +18,7 @@ main()[
   systemOut("Enter a number to calculate it's factorial\n");
   systemIn (number);
 
-  systemOut(number, " = ", factorial(number), '\n');
+  systemOut(number, " = ", factorial(number), "\n");
   &&
   &;
   return;

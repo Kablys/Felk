@@ -42,6 +42,8 @@ public enum Lexeme {
     NOTEQUAL,
     MOREEQUAL,
     LESSEQUAL,
-    COMMA
+    COMMA,
+    SINGLECOMMENT,
+    MULTICOMMENT
 }
 

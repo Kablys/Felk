@@ -37,6 +37,33 @@ public class Main {
         }
         return s.substring(i, j);
     }
+// asdfadsfasdf
+    /* */
+    public static String getComment(String s, int i, Boolean multiline) {
+        int j = i;
+        if (multiline){
+            for( ; j < s.length(); ) {
+                if(s.charAt(j) == '*') {
+                    if (s.charAt(j+1) == '/'){
+                        return s.substring(i, j+2);
+                    }
+                    j++;
+                } else {
+                    j++;
+                }
+            }
+            return s.substring(i, j);
+        } else {
+            for( ; j < s.length(); ) {
+                if (s.charAt(j+1) == '\n'){
+                    return s.substring(i, j+1);
+                } else {
+                    j++;
+                }
+            }
+            return s.substring(i, j);
+        }
+    }
 
     public static List<Token> lex(String input) {
         List<Token> result = new ArrayList<Token>();
@@ -44,7 +71,23 @@ public class Main {
             switch(input.charAt(i)) {
 
                 //                Double Symbols
+                case '/':
+                    if(input.charAt(i + 1) == '/') {
+                        String comment = getComment(input, i, false);  //false = ne multiline
+                        result.add(new Token(Lexeme.SINGLECOMMENT, comment));
+                        i += comment.length();
+                        break;
+                    } else if(input.charAt(i + 1) == '*'){
+                        String comment = getComment(input, i, true);  //true = multiline
+                        result.add(new Token(Lexeme.MULTICOMMENT, comment));
+                        i += comment.length() + 1;
+                        break;
 
+                    } else {
+                        result.add(new Token(Lexeme.DIVISION, "/"));
+                        i++;
+                        break;
+                    }
                 case '&':
                     if(input.charAt(i + 1) == '&') {
                         result.add(new Token(Lexeme.ANDOP, "&&"));
@@ -150,10 +193,7 @@ public class Main {
                     result.add(new Token(Lexeme.MULTIPLY, "*"));
                     i++;
                     break;
-                case '/':
-                    result.add(new Token(Lexeme.DIVISION, "/"));
-                    i++;
-                    break;
+
                 case '%':
                     result.add(new Token(Lexeme.MOD, "%"));
                     i++;
@@ -164,6 +204,8 @@ public class Main {
                     break;
 
 //                String
+
+
 
                 case '"':
                     result.add(new Token(Lexeme.COMMA, ","));

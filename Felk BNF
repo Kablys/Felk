@@ -1,0 +1,99 @@
+<program> 			::= <mainBlock>
+<mainBlock> 		::= <main> | <functions> <main>
+<functions>         ::= <function> <functions> | <function>
+
+//	MAIN
+<main> 				::= 'main' '('<parameter>')' '[' <block> ']' | 'main' '()' '[' <block> ']'
+
+//	BLOCK
+<block> 			::= <block> <sentence> | <sentence>
+<sentence>          ::= <control> | <declaration> | <assign> | <functionCall> | <return> | <statement>
+//	CONTROL
+<control> 			::= <for> | <while> | <if>
+<for> 				::= 'for' <identifier> ':=' <forList> '[' <block> ']' | 'for' <forList>  '[' <block> ']'
+<forList> 			::= <initialValue> 'to' <finalValue> | <initialValue> 'downto' <finalValue>
+<initialValue>		::= <expression>
+<finalValue> 		::= <expression>
+//	WHILE
+<while> 			::= 'while' <expression> '[' <block> ']'
+//	IF
+<if> 				::= 'if' '('<expression>')''[' <block> ']' | 'if' '(' <expression> ')' '[' <block> ']' 'else' '[' <block> ']'  |
+                        'if' '('<expression>')' '[' <block> ']' 'else' <if>
+
+//	EXPRESSION
+<expression> 		::= <simpleExpression> | <expression> <relationalOperator> <expression>
+<relationalOperator>::= '==' | '!=' | '<' | '<=' | '>=' | '>'
+<simpleExpression> 	::= <term> | <sign> <term> | <simpleExpression> <addingOp> <term>
+<term> 				::= <factor> | <term> <multiplyingOp> <factor>
+<factor> 			::= <variable> | <functionCall> | (<expression>)
+<variable> 			::= <identifier> | <string> | <digit> | <bool>
+	//(a + b)*3; a+(8+4*7)
+//	DECLARATION
+<declaration> 		::= <type> <identifiers>';'
+<identifiers>       ::=  ',' <identifier> <identifiers> | ',' <identifier>
+
+//	ASSIGN
+<assign> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
+
+//	FUNCTIONCALL
+<functionCall> 		::= <identifier> '('');' | <identifier> '('<expressions>');'
+<expressions>       ::= ',' <expression> <expressions> | ',' <expression>
+
+//	RETURN
+<return> 			::= 'return'';' | 'return' <expression> ';'
+
+//    STATEMENT
+<statement>         ::= <systemOut> | <systemIn>;
+<systemOut>         ::=  'systemOut' '(' <expressions> ['"\n"'] ');'
+<systemIn>          ::= 'systemIn' '('<identifier>')'';'
+
+//	FUNCTION
+<function>		 	::= <functionType> <identifier> '('<parameter>')' '[' <block> ']' | <functionType> <identifier> '('')' '[' <block> ']'
+<functionType> 		::= 'void' | <type>
+
+//	NAMING
+<parameter> 		::= <type> <identifier> <identifierWithType> | <type> <identifier>
+<identifierWithType>::= ',' <type> <identifier> <identifierWithType> | ',' <type> <identifier>
+<type> 				::= 'int' | 'string' | 'float' | 'char' | 'bool'
+<identifier>		::= <character> <charAndDigit> | <character>
+<charAndDigit>      ::= <character> <charAndDigit> | <digit> <charAndDigit> | <character> | <digit>
+<sign> 				::= '+' | '-'
+<addingOp> 			::= '+' | '-' | '||'
+<multiplyingOp> 	::= '*' | '/' | '%' | '&&'
+<bool> 				::= 'true' | 'false'
+<digit> 			::= <sign> <int> <ints> | <sign> <int> | <int> | <int> <ints> | <sign> <float> | <float>
+<ints>              ::= <int> <ints> | <int>
+<float> 			::= <ints> '.' <ints>
+<int> 				::= '0' | '...' | '9'
+<string> 			::= '"'<character><characters>'"' | '"'<character>'"'
+<characters>        ::= <character> <characters> | <character>
+<character> 		::= <upperCase> | <lowerCase> | <digit>
+<upperCase> 		::= 'A' | 'B' | '...' | 'Z' //Latin alphabet
+<lowerCase>			::= 'a' | 'b' | '...' | 'z' //Latin alphabet
+
+
+
+int factorial(int n)[
+  int c;
+  int result := 1;
+
+  for c := 1 to n[
+    result := result * c;
+ ]
+  return result;
+]
+
+main()[
+  int number;
+  int fact := 1;
+
+  systemOut("Enter a number to calculate it's factorial\n");
+  systemIn (number);
+
+  systemOut(number, " = ", factorial(number), '\n');
+
+  return;
+]
+
+
+

@@ -73,27 +73,5 @@
 
 
 
-int factorial(int n)[
-  int c;
-  int result := 1;
-
-  for c := 1 to n[
-    result := result * c;
- ]
-  return result;
-]
-
-main()[
-  int number;
-  int fact := 1;
-
-  systemOut("Enter a number to calculate it's factorial\n");
-  systemIn (number);
-
-  systemOut(number, " = ", factorial(number), '\n');
-
-  return;
-]
-
 
 

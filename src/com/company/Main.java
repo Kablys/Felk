@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.RecursiveTask;
 
 public class Main {
 
@@ -18,48 +17,7 @@ public class Main {
             this.c = c;
         }
         public String toString() {
-            switch (t) {
-                case LPAREN:
-                    return "Lexeme: LPAREN, " + c;
-                case RPAREN:
-                    return "Lexeme: RPAREN, " + c;
-                case LBRACKET:
-                    return "Lexeme: LBRACKET, " + c;
-                case RBRACKET:
-                    return "Lexeme: RBRACKET, " + c;
-                case ATOM:
-                    return "Lexeme: ATOM, " + c;
-                case SEMICOLON:
-                    return "Lexeme: SEMICOLON, " + c;
-                case PLUS:
-                    return "Lexeme: PLUS, " + c;
-                case MINUS:
-                    return "Lexeme: MINUS, " + c;
-                case MULTIPLICATION:
-                    return "Lexeme: MULTIPLICATION, " + c;
-                case DIVISION:
-                    return "Lexeme: DIVISION, " + c;
-                case MOD:
-                    return "Lexeme: MOD, " + c;
-                case NEGATIVE:
-                    return "Lexeme: NEGATIVE, " + c;
-                case INT:
-                    return "Lexeme: INT, " + c;
-                case FLOAT:
-                    return "Lexeme: FLOAT, " + c;
-                case STRING:
-                    return "Lexeme: STRING, " + c;
-                case CHAR:
-                    return "Lexeme: CHAR, " + c;
-                case BOOL:
-                    return "Lexeme: BOOL, " + c;
-                case VOID:
-                    return "Lexeme: VOID, " + c;
-                default:
-                    return t.toString();
-
-
-            }
+            return "Lexeme: " + t + ' ' + c;
         }
     }
 

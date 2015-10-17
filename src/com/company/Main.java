@@ -74,12 +74,12 @@ public class Main {
                 case '/':
                     if(input.charAt(i + 1) == '/') {
                         String comment = getComment(input, i, false);  //false = ne multiline
-                        result.add(new Token(Lexeme.SINGLECOMMENT, comment));
+                        result.add(new Token(Lexeme.SCOMMENT, comment));
                         i += comment.length();
                         break;
                     } else if(input.charAt(i + 1) == '*'){
                         String comment = getComment(input, i, true);  //true = multiline
-                        result.add(new Token(Lexeme.MULTICOMMENT, comment));
+                        result.add(new Token(Lexeme.MCOMMENT, comment));
                         i += comment.length() + 1;
                         break;
 

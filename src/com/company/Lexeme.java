@@ -43,7 +43,7 @@ public enum Lexeme {
     MOREEQUAL,
     LESSEQUAL,
     COMMA,
-    SINGLECOMMENT,
-    MULTICOMMENT
+    SCOMMENT,
+    MCOMMENT
 }
 

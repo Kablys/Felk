@@ -58,8 +58,7 @@ public class Main {
         }
         return s.substring(i, j);
     }
-// asdfadsfasdf
-    /* */
+
     public static String getComment(String s, int i, Boolean multiline) {
         int j = i;
         if (multiline){

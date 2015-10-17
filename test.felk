@@ -1,0 +1,21 @@
+int factorial(int n)[
+  int c;
+  int result := 1;
+ 
+  for c := 1 to n[
+    result := result * c;
+ ]
+  return result;
+]
+ 
+main()[ 
+  int number;
+  int fact := 1;
+ 
+  sout("Enter a number to calculate it's factorial\n");
+  sin("%d", &number);
+ 
+  sout("%d! = %ld\n", number, factorial(number)); //reikia sutvarkyti funkciju kvietima kaip parametra
+ 
+  return;
+]

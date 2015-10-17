@@ -38,5 +38,5 @@ public enum Lexeme {
     EXCEPTION,
     LESS,
     MORE,
-    }
+}
 

@@ -9,6 +9,11 @@ import java.util.List;
 
 public class Main {
 
+    private static String [] reservedKeyWords = {"int", "float", "string", "char", "bool", "void", "while", "for",
+                                                "if", "else", "main", "systemOut", "systemIn", "true", "false",
+                                                "return", "to", "downto"};
+
+
     public static class Token {
         public final Lexeme t;
         public final String c; // Papildoma informacija
@@ -142,12 +147,22 @@ public class Main {
 //                    Text
 
                 default:
+                    boolean TYPO = false;
                     if(Character.isWhitespace(input.charAt(i))) {
                         i++;
                     } else if (Character.isLetter(input.charAt(i))){
                         String atom = getAtom(input, i);
-                        i += atom.length();
-                        result.add(new Token(Lexeme.ATOM, atom));
+                        for (int j = 0; j < reservedKeyWords.length; j++) {
+                            if (atom.equals(reservedKeyWords[j])) {
+                                result.add(new Token(Lexeme.valueOf(reservedKeyWords[j].toUpperCase()), atom));
+                                i += atom.length();
+                                TYPO = true;
+                            }
+                        }
+                        if(!TYPO) {
+                            i += atom.length();
+                            result.add(new Token(Lexeme.ATOM, atom));
+                        }
                     } else {
                         i++;
                     }

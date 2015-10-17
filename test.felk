@@ -1,6 +1,7 @@
 int factorial(int n)[
   int c;
   int result := 1;
+  string tas := "something";
 
   for c := 1 to n[
     result := result * c;

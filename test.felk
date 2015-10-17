@@ -11,6 +11,7 @@ int factorial(int n)[
 main()[
   int number;
   int fact := 1;
+  int one := 5 % 2;
 
   systemOut("Enter a number to calculate it's factorial\n");
   systemIn (number);

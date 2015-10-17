@@ -57,6 +57,34 @@ public class Main {
                     result.add(new Token(Lexeme.RBRACKET, "]"));
                     i++;
                     break;
+                case '+':
+                    result.add(new Token(Lexeme.PLUS, "+"));
+                    i++;
+                    break;
+                case '-':
+                    result.add(new Token(Lexeme.MINUS, "-"));
+                    i++;
+                    break;
+                case '*':
+                    result.add(new Token(Lexeme.MULTIPLICATION, "*"));
+                    i++;
+                    break;
+                case '/':
+                    result.add(new Token(Lexeme.DIVISION, "/"));
+                    i++;
+                    break;
+                case '%':
+                    result.add(new Token(Lexeme.MOD, "%"));
+                    i++;
+                    break;
+                case '<':
+                    result.add(new Token(Lexeme.LESS, "<"));
+                    i++;
+                    break;
+                case '>':
+                    result.add(new Token(Lexeme.MORE, ">"));
+                    i++;
+                    break;
 
 //                Double Symbol
 

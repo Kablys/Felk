@@ -34,5 +34,7 @@ public enum Lexeme {
     DOWNTO,
     ANDOP,
     EXCEPTION,
+    LESS,
+    MORE,
     }
 

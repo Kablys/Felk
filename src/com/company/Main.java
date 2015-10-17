@@ -26,6 +26,27 @@ public class Main {
         }
     }
 
+    public static String getNum(String s, int i) {
+        int j = i;
+        for( ; j < s.length(); ) {
+            if(Character.isDigit(s.charAt(j))) {
+                j++;
+            } else if (s.charAt(j) == '.') {
+                for( ; j < s.length(); ) {
+                    j++;
+                    if (Character.isDigit(s.charAt(j))) {
+                        j++;
+                    }else{
+                        return s.substring(i,j-1);
+                    }
+                }
+            } else {
+                return s.substring(i, j);
+            }
+        }
+        return s.substring(i, j);
+    }
+
     public static String getAtom(String s, int i) {
         int j = i;
         for( ; j < s.length(); ) {
@@ -173,7 +194,6 @@ public class Main {
 //                Single Symblos
 
                 case '"':
-
                     String string = getString(input, i+1);
                     result.add(new Token(Lexeme.STRING, '"' + string));
                     i += string.length() + 1;
@@ -219,6 +239,7 @@ public class Main {
                     result.add(new Token(Lexeme.COMMA, ","));
                     i++;
                     break;
+
 //                    Text
 
                 default:
@@ -238,7 +259,12 @@ public class Main {
                             i += atom.length();
                             result.add(new Token(Lexeme.IDENTIFIER, atom));
                         }
-                    } else {
+                    } else if (Character.isDigit(input.charAt(i))){
+                        String number = getNum(input, i);
+                        result.add(new Token(Lexeme.NUMBER, number));
+                        i += number.length();
+                    }
+                    else {
                         i++;
                     }
                     break;

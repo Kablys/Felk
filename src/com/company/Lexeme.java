@@ -44,6 +44,7 @@ public enum Lexeme {
     LESSEQUAL,
     COMMA,
     SCOMMENT,
-    MCOMMENT
+    MCOMMENT,
+    NUMBER
 }
 

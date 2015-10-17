@@ -8,26 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static enum Lexem {
-        LPAREN, RPAREN, ATOM, SOMETHINGELSE
-    }
+
     public static class Token {
-        public final Lexem t;
+        public final Lexeme t;
         public final String c; // Papildoma informacija
-        public Token(Lexem t, String c) {
+        public Token(Lexeme t, String c) {
             this.t = t;
             this.c = c;
         }
         public String toString() {
             switch (t) {
                 case LPAREN:
-                    return "Lexem: LPAREN, " + c;
+                    return "Lexeme: LPAREN, " + c;
                 case RPAREN:
-                    return "Lexem: RPAREN, " + c;
+                    return "Lexeme: RPAREN, " + c;
                 case ATOM:
-                    return "Lexem: ATOM, " + c;
-                case SOMETHINGELSE:
-                    return "Lexem: SOMETHINGELSE, " + c;
+                    return "Lexeme: ATOM, " + c;
+                case SEMICOLON:
+                    return "Lexeme: SEMICOLON, " + c;
                 default:
                     return t.toString();
 
@@ -53,11 +51,15 @@ public class Main {
         for(int i = 0; i < input.length(); ) {
             switch(input.charAt(i)) {
                 case '(':
-                    result.add(new Token(Lexem.LPAREN, "("));
+                    result.add(new Token(Lexeme.LPAREN, "("));
                     i++;
                     break;
                 case ')':
-                    result.add(new Token(Lexem.RPAREN, ")"));
+                    result.add(new Token(Lexeme.RPAREN, ")"));
+                    i++;
+                    break;
+                case ';':
+                    result.add(new Token(Lexeme.SEMICOLON, ";"));
                     i++;
                     break;
                 default:
@@ -66,7 +68,7 @@ public class Main {
                     } else if (Character.isLetter(input.charAt(i))){
                         String atom = getAtom(input, i);
                         i += atom.length();
-                        result.add(new Token(Lexem.ATOM, atom));
+                        result.add(new Token(Lexeme.ATOM, atom));
                     } else {
                         i++;
                     }

@@ -22,7 +22,7 @@ public class Main {
             this.c = c;
         }
         public String toString() {
-            return "Lexeme: " + t + ' ' + c;
+            return String.format("%s %-10s %s" , "Lexeme", t, c );
         }
     }
 
@@ -147,7 +147,7 @@ public class Main {
                     i++;
                     break;
                 case '*':
-                    result.add(new Token(Lexeme.MULTIPLICATION, "*"));
+                    result.add(new Token(Lexeme.MULTIPLY, "*"));
                     i++;
                     break;
                 case '/':
@@ -178,9 +178,9 @@ public class Main {
                         i++;
                     } else if (Character.isLetter(input.charAt(i))){
                         String atom = getAtom(input, i);
-                        for (int j = 0; j < reservedKeyWords.length; j++) {
-                            if (atom.equals(reservedKeyWords[j])) {
-                                result.add(new Token(Lexeme.valueOf(reservedKeyWords[j].toUpperCase()), atom));
+                        for (String reservedKeyWord : reservedKeyWords) {
+                            if (atom.equals(reservedKeyWord)) {
+                                result.add(new Token(Lexeme.valueOf(reservedKeyWord.toUpperCase()), atom));
                                 i += atom.length();
                                 TYPO = true;
                             }

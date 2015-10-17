@@ -11,7 +11,7 @@ public enum Lexeme {
     SEMICOLON,
     PLUS,
     MINUS,
-    MULTIPLICATION,
+    MULTIPLY,
     DIVISION,
     MOD,
     NEGATIVE,

@@ -98,6 +98,46 @@ public class Main {
                         i++;
                         break;
                     }
+                case '|':
+                    if(input.charAt(i + 1) == '|') {
+                        result.add(new Token(Lexeme.OROP, "||"));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after | " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case ':':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.ASSIG, ":="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after : " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case '=':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.ASSIG, "=="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after = " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case '!':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.ASSIG, "!="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after ! " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
 
 //                    Text
 

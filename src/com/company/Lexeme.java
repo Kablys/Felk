@@ -33,6 +33,8 @@ public enum Lexeme {
     TO,
     DOWNTO,
     ANDOP,
+    OROP,
+    ASSIG,
     EXCEPTION,
     LESS,
     MORE,

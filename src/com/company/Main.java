@@ -99,6 +99,16 @@ public class Main {
                     result.add(new Token(Lexeme.RBRACKET, "]"));
                     i++;
                     break;
+                case '&':
+                    if(input.charAt(i + 1) == '&') {
+                        result.add(new Token(Lexeme.ANDOP, "&&"));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXEPTION, "Undefined value after &: " + input.charAt(i + 1)));
+                        i++;
+                        break;
+                    }
                 default:
                     if(Character.isWhitespace(input.charAt(i))) {
                         i++;

@@ -261,7 +261,11 @@ public class Main {
                         }
                     } else if (Character.isDigit(input.charAt(i))){
                         String number = getNum(input, i);
-                        result.add(new Token(Lexeme.NUMBER, number));
+                        if (number.indexOf('.') > -1){
+                            result.add(new Token(Lexeme.FLOAT, number));
+                        } else
+                            result.add(new Token(Lexeme.NUMBER, number.replaceFirst("^0+(?!$)", "")));
+
                         i += number.length();
                     }
                     else {

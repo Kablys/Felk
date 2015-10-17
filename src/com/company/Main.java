@@ -57,6 +57,9 @@ public class Main {
                     result.add(new Token(Lexeme.RBRACKET, "]"));
                     i++;
                     break;
+
+//                Double Symbol
+
                 case '&':
                     if(input.charAt(i + 1) == '&') {
                         result.add(new Token(Lexeme.ANDOP, "&&"));
@@ -67,6 +70,9 @@ public class Main {
                         i++;
                         break;
                     }
+
+//                    Text
+
                 default:
                     if(Character.isWhitespace(input.charAt(i))) {
                         i++;

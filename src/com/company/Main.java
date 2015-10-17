@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Main {
     public static enum Lexem {
-        LPAREN, RPAREN, ATOM, SOMETHINGELSE;
+        LPAREN, RPAREN, ATOM, SOMETHINGELSE
     }
     public static class Token {
         public final Lexem t;
@@ -63,10 +63,12 @@ public class Main {
                 default:
                     if(Character.isWhitespace(input.charAt(i))) {
                         i++;
-                    } else {
+                    } else if (Character.isLetter(input.charAt(i))){
                         String atom = getAtom(input, i);
                         i += atom.length();
                         result.add(new Token(Lexem.ATOM, atom));
+                    } else {
+                        i++;
                     }
                     break;
             }
@@ -88,21 +90,10 @@ public class Main {
                     line = br.readLine();
                 }
                 String everything = sb.toString();
-                System.out.println("1");
                 List<Token> tokens = lex(everything);
-                System.out.println("2");
                 for(Token t : tokens) {
                     System.out.println(t);
                 }
-//                for (int i = 0; i < everything.length(); i++){
-//                    char c = everything.charAt(i);
-//                    switch (c){
-//                        case '(':
-//
-//
-//                    }
-//                }
-                System.out.println(everything);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

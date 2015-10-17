@@ -32,12 +32,12 @@ public class Main {
             if(Character.isDigit(s.charAt(j))) {
                 j++;
             } else if (s.charAt(j) == '.') {
+                j++;
                 for( ; j < s.length(); ) {
-                    j++;
                     if (Character.isDigit(s.charAt(j))) {
                         j++;
                     }else{
-                        return s.substring(i,j-1);
+                        return s.substring(i,j);
                     }
                 }
             } else {
@@ -267,8 +267,9 @@ public class Main {
                             result.add(new Token(Lexeme.NUMBER, number.replaceFirst("^0+(?!$)", "")));
 
                         i += number.length();
-                    }
-                    else {
+                    } else {
+                        result.add(new Token(Lexeme.EXCEPTION, "Unknown lexem" + input.charAt(i)));
+
                         i++;
                     }
                     break;

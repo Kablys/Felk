@@ -42,6 +42,82 @@ public class Main {
         List<Token> result = new ArrayList<Token>();
         for(int i = 0; i < input.length(); ) {
             switch(input.charAt(i)) {
+
+                //                Double Symbols
+
+                case '&':
+                    if(input.charAt(i + 1) == '&') {
+                        result.add(new Token(Lexeme.ANDOP, "&&"));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after & " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case '|':
+                    if(input.charAt(i + 1) == '|') {
+                        result.add(new Token(Lexeme.OROP, "||"));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after | " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case ':':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.ASSIG, ":="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after : " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case '=':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.EQUAL, "=="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after = " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case '!':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.NOTEQUAL, "!="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after ! " + '\'' + input.charAt(i + 1) + '\''));
+                        i++;
+                        break;
+                    }
+                case '>':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.MOREEQUAL, ">="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.MORE, ">"));
+                        i++;
+                        break;
+                    }
+                case '<':
+                    if(input.charAt(i + 1) == '=') {
+                        result.add(new Token(Lexeme.LESSEQUAL, "<="));
+                        i += 2;
+                        break;
+                    } else{
+                        result.add(new Token(Lexeme.LESS, "<"));
+                        i++;
+                        break;
+                    }
+
+//                Single Symblos
+
                 case '(':
                     result.add(new Token(Lexeme.LPAREN, "("));
                     i++;
@@ -82,67 +158,17 @@ public class Main {
                     result.add(new Token(Lexeme.MOD, "%"));
                     i++;
                     break;
-                case '<':
-                    result.add(new Token(Lexeme.LESS, "<"));
-                    i++;
-                    break;
-                case '>':
-                    result.add(new Token(Lexeme.MORE, ">"));
+                case ',':
+                    result.add(new Token(Lexeme.COMMA, ","));
                     i++;
                     break;
 
-//                Double Symbol
+//                String
 
-                case '&':
-                    if(input.charAt(i + 1) == '&') {
-                        result.add(new Token(Lexeme.ANDOP, "&&"));
-                        i += 2;
-                        break;
-                    } else{
-                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after & " + '\'' + input.charAt(i + 1) + '\''));
-                        i++;
-                        break;
-                    }
-                case '|':
-                    if(input.charAt(i + 1) == '|') {
-                        result.add(new Token(Lexeme.OROP, "||"));
-                        i += 2;
-                        break;
-                    } else{
-                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after | " + '\'' + input.charAt(i + 1) + '\''));
-                        i++;
-                        break;
-                    }
-                case ':':
-                    if(input.charAt(i + 1) == '=') {
-                        result.add(new Token(Lexeme.ASSIG, ":="));
-                        i += 2;
-                        break;
-                    } else{
-                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after : " + '\'' + input.charAt(i + 1) + '\''));
-                        i++;
-                        break;
-                    }
-                case '=':
-                    if(input.charAt(i + 1) == '=') {
-                        result.add(new Token(Lexeme.ASSIG, "=="));
-                        i += 2;
-                        break;
-                    } else{
-                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after = " + '\'' + input.charAt(i + 1) + '\''));
-                        i++;
-                        break;
-                    }
-                case '!':
-                    if(input.charAt(i + 1) == '=') {
-                        result.add(new Token(Lexeme.ASSIG, "!="));
-                        i += 2;
-                        break;
-                    } else{
-                        result.add(new Token(Lexeme.EXCEPTION, "Undefined value after ! " + '\'' + input.charAt(i + 1) + '\''));
-                        i++;
-                        break;
-                    }
+                case '"':
+                    result.add(new Token(Lexeme.COMMA, ","));
+                    i++;
+                    break;
 
 //                    Text
 

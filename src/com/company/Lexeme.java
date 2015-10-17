@@ -2,6 +2,7 @@ package com.company;
 
 
 public enum Lexeme {
+    EXCEPTION,
     LPAREN,
     RPAREN,
     LBRACKET,
@@ -35,8 +36,12 @@ public enum Lexeme {
     ANDOP,
     OROP,
     ASSIG,
-    EXCEPTION,
+    EQUAL,
     LESS,
     MORE,
+    NOTEQUAL,
+    MOREEQUAL,
+    LESSEQUAL,
+    COMMA
 }
 

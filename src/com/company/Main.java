@@ -191,7 +191,7 @@ public class Main {
                         break;
                     }
 
-//                Single Symblos
+//                Single Symbol
 
                 case '"':
                     String string = getString(input, i+1);
@@ -277,7 +277,19 @@ public class Main {
         }
         return result;
     }
-    
+    static Integer nTok = 0;
+    public static Token getNextToken (List<Token> tokens){
+
+        if (nTok < tokens.size()) {
+            Token t = tokens.get(nTok);
+            nTok++;
+            return t;
+        } else {
+            nTok = -1;
+            return tokens.get(tokens.size() - 1);
+        }
+
+    }
     public static void main(String[] args) throws IOException {
         if (args.length == 1){
             //System.out.println(args[0]);
@@ -293,8 +305,13 @@ public class Main {
                 }
                 String everything = sb.toString();
                 List<Token> tokens = lex(everything);
-                for(Token t : tokens) {
-                    System.out.println(t);
+//                for(Token t : tokens) {
+//                    System.out.println(t);
+//                }
+                Token tok = getNextToken(tokens);
+                while (nTok >= 0){
+                    System.out.println(tok);
+                    tok = getNextToken(tokens);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

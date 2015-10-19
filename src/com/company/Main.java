@@ -50,7 +50,7 @@ public class Main {
     public static String getAtom(String s, int i) {
         int j = i;
         for( ; j < s.length(); ) {
-            if(Character.isLetter(s.charAt(j))) {
+            if(Character.isLetterOrDigit(s.charAt(j))) {
                 j++;
             } else {
                 return s.substring(i, j);
@@ -118,12 +118,20 @@ public class Main {
                 case '/':
                     if(input.charAt(i + 1) == '/') {
                         String comment = getComment(input, i, false);  //false = ne multiline
-                        result.add(new Token(Lexeme.SCOMMENT, comment));
+                        //result.add(new Token(Lexeme.SCOMMENT, comment));
                         i += comment.length();
                         break;
                     } else if(input.charAt(i + 1) == '*'){
                         String comment = getComment(input, i, true);  //true = multiline
-                        result.add(new Token(Lexeme.MCOMMENT, comment));
+                        System.out.printf("1");
+
+                        if (comment.substring(comment.length() - 2).equals("*/")) {
+                            //result.add(new Token(Lexeme.MCOMMENT, comment));
+                            i += comment.length() + 1;
+                            break;
+                        }
+                        System.out.printf("2");
+                        result.add(new Token(Lexeme.EXCEPTION, "Comment is not closed"));
                         i += comment.length() + 1;
                         break;
 

@@ -24,6 +24,9 @@ main()[
   return;
   ""
   float some := 120.123.asd;
+  /*Commenting something in/*
+  in a few lines *
+  /and this is working*/
 ]
 /*jlkfas;fj
 alskdf;ajs*/

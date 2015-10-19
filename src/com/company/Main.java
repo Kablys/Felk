@@ -87,11 +87,24 @@ public class Main {
     public static String getString(String s, int i) {
         int j = i;
             for( ; j < s.length(); ) {
+                //System.out.println("ENTERED STRING");
                 if(s.charAt(j) == '"') {
+                    return s.substring(i, j+1);
+                } else if (s.charAt(j) == '\\') {
+                    if (s.charAt(j + 1) == '"') {
+                        System.out.println("SECOND ENTER STRING");
+                        j += 2;
+                    } else{
+                        j++;
+                    }
+                }else{
+                    j++;
+                }
+                /*if(s.charAt(j) == '"') {
                     return s.substring(i, j+1);
                 } else {
                     j++;
-                }
+                }*/
             }
             return s.substring(i, j);
     }

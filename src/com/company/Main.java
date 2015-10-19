@@ -123,14 +123,11 @@ public class Main {
                         break;
                     } else if(input.charAt(i + 1) == '*'){
                         String comment = getComment(input, i, true);  //true = multiline
-                        System.out.printf("1");
-
                         if (comment.substring(comment.length() - 2).equals("*/")) {
                             //result.add(new Token(Lexeme.MCOMMENT, comment));
                             i += comment.length() + 1;
                             break;
                         }
-                        System.out.printf("2");
                         result.add(new Token(Lexeme.EXCEPTION, "Comment is not closed"));
                         i += comment.length() + 1;
                         break;
@@ -215,7 +212,13 @@ public class Main {
 
                 case '"':
                     String string = getString(input, i+1);
-                    result.add(new Token(Lexeme.STRING, '"' + string));
+
+                    if (string.substring(string.length() - 1).equals("\"")) {
+                        result.add(new Token(Lexeme.STRING, '"' + string));
+                        i += string.length() + 1;
+                        break;
+                    }
+                    result.add(new Token(Lexeme.EXCEPTION, "String is not closed"));
                     i += string.length() + 1;
                     break;
                 case '(':

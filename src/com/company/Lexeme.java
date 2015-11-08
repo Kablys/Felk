@@ -2,6 +2,7 @@ package com.company;
 
 
 public enum Lexeme {
+    PROGRAM,
     EXCEPTION,
     LPAREN,
     RPAREN,

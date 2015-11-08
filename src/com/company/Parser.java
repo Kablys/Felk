@@ -1,13 +1,19 @@
 package com.company;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
     static Node ast;
     static Integer nTok = 0;
     static List<Lexer.Token> tokens;
-    public Parser(List<Lexer.Token> ltokens) {
-        tokens = ltokens;
+    //static Lexeme[] arrayOfTypes = {com.company.Lexeme.INT, com.company.Lexeme.FLOAT, com.company.Lexeme.STRING, com.company.Lexeme.CHAR, com.company.Lexeme.BOOL, com.company.Lexeme.VOID};
+    List<Lexeme> arrayOfTypes = Arrays.asList(com.company.Lexeme.INT, com.company.Lexeme.FLOAT, com.company.Lexeme.STRING, com.company.Lexeme.CHAR, com.company.Lexeme.BOOL, com.company.Lexeme.VOID);
+    //myList = {Lexeme.INT, Lexeme.FLOAT, Lexeme.STRING, Lexeme.CHAR, Lexeme.BOOL, Lexeme.VOID};
+    public Parser(List<Lexer.Token> programsTokens) {
+        tokens = programsTokens;
         for(Lexer.Token t : tokens) {
             System.out.println(t);
         }
@@ -28,10 +34,15 @@ public class Parser {
 
 
     public Node programParse (Lexer.Token token){
-        Node node;
+        Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "Root of the program");
+        Node node = new Node (rootToken);
+        if (arrayOfTypes.contains(token.t))
+            return null;
+
         if (token.t == Lexeme.MAIN)
-            mainParse(getNextToken());
-        return null;
+            node.addChildren(mainParse(getNextToken()));
+            return node;
+
     }
     public Node mainParse (Lexer.Token token){
         if (token.t == Lexeme.MAIN)

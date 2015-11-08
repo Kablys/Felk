@@ -1,50 +1,21 @@
-42324kjh432ads345asd
-455.4543.5353.4534.5435.43
-==<>>><<==
-+++==-
-&&&===                   4
-!
-&
-|
-:=                        8
-if ifas
-"if
-ifas"
-/* sdsa * lkjk**/
-test
-
-/*
-jskahdkjsa
-
 int factorial(int n)[
   int c;
-  float some := 120.123;
-  string tas := "something";
-
+  int result := 1;
+ 
   for c := 1 to n[
     result := result * c;
  ]
   return result;
 ]
-
-main()[
+ 
+main()[ 
   int number;
   int fact := 1;
-  int one := 5 % 2;
-
+ 
   systemOut("Enter a number to calculate it's factorial\n");
-  systemIn (number);
-
-  systemOut(number, " = ", factorial(number), "\n");
-  &&
-  &;
+  systemIn("%d", &number);
+ 
+  systemOut("%d! = %ld\n", number, factorial(number)); //reikia sutvarkyti funkciju kvietima kaip parametra
+ 
   return;
-  " \" asdasd "
-  float some := 120.123.asd;
-  /*Commenting something in/*
-  in a few lines *
-  /and this is working* /
 ]
-/*jlkfas;fj
-alskdf;ajs*
-"afddasd

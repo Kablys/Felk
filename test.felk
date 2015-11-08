@@ -18,8 +18,7 @@ jskahdkjsa
 
 int factorial(int n)[
   int c;
-  float some := 120.123.123asd;
-  //int result := 00001;
+  float some := 120.123;
   string tas := "something";
 
   for c := 1 to n[

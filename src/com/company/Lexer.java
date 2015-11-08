@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class Lexer {
 
     private static String [] reservedKeyWords = {"int", "float", "string", "char", "bool", "void", "while", "for",
                                                 "if", "else", "main", "systemOut", "systemIn", "true", "false",
@@ -361,11 +361,13 @@ public class Main {
 //                for(Token t : tokens) {
 //                    System.out.println(t);
 //                }
-                Token tok = getNextToken(tokens);
-                while (nTok >= 0){
-                    System.out.println(tok);
-                    tok = getNextToken(tokens);
-                }
+                //lexer print
+//                Token tok = getNextToken(tokens);
+//                while (nTok >= 0){
+//                    System.out.println(tok);
+//                    tok = getNextToken(tokens);
+//                }
+                Parser parser = new Parser(tokens);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

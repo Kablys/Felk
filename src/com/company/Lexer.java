@@ -366,21 +366,23 @@ public class Lexer {
 //                    tok = getNextToken(tokens);
 //                }
                 //Parser parser = new Parser(tokens);
-                Token rootToken = new Token(Lexeme.PROGRAM, "Root of the program");
+                Token rootToken = new Token(Lexeme.PROGRAM, "JONAS");
                 Node node = new Node (rootToken);
 
-                Token rootToken2 = new Token(Lexeme.PROGRAM, "Root of the program2");
+                Token rootToken2 = new Token(Lexeme.PROGRAM, "Petras");
                 Node node2 = new Node (rootToken2);
-                Token rootToken3 = new Token(Lexeme.PROGRAM, "Root of the program3");
+                Token rootToken3 = new Token(Lexeme.PROGRAM, "Maryte");
                 Node node3 = new Node (rootToken3);
-                Token rootToken4 = new Token(Lexeme.PROGRAM, "CHILED");
+                Token rootToken4 = new Token(Lexeme.PROGRAM, "vaikas");
                 Node node4 = new Node (rootToken4);
 
                 node.addChildren(node2);
                 node.addChildren(node3);
                 node2.addChildren(node4);
-                node.toXml(0);
-
+                //String output = "";
+                String output = node.toXml(0);
+                //
+                node.toXml2(output);
 
             } catch (IOException e) {
                 e.printStackTrace();

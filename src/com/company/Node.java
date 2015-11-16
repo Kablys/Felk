@@ -1,9 +1,16 @@
 package com.company;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import static java.nio.file.StandardOpenOption.*;
 
 public class Node{
+    String output = "";
     private Lexer.Token token;
     Node parent = null;
     private List<Node> children = new ArrayList<Node>();
@@ -19,13 +26,41 @@ public class Node{
         child.parent(this);
     }
 
-    public void toXml(int indent){
+    public String toXml(int indent){
         for(int i = 0; i < indent; i++){
-            System.out.println("\t");
+            output += ("\t");
         }
-        System.out.println(token.toString2());
+        output += ("<" + token.toString2() + ">" + token.toString2());
         for(Node i : children){
-            i.toXml(indent + 1);
+            output += i.toXml(indent + 1);
+        }
+        for(int i = 0; i < indent; i++){
+            output += ("\t");
+        }
+        output += ("</" + token.toString2() + ">");
+        return output;
+    }
+//        for(int i = 0; i < indent; i++){
+//            System.out.print("\t");
+//        }
+//        System.out.println("<"+token.toString2()+"> " + token.toString2());
+//        for(Node i : children){
+//            i.toXml(indent + 1);
+//        }
+//        for(int i = 0; i < indent; i++){
+//            System.out.print("\t");
+//        }
+//        System.out.println("</"+token.toString2()+">");
+
+    public void toXml2(String output) {
+        Path p = Paths.get("./logfile.xml");
+        byte[] data = output.getBytes();
+        try (OutputStream out = new BufferedOutputStream(
+                Files.newOutputStream(p, CREATE))) {
+
+            out.write(data, 0, data.length);
+        } catch (IOException x) {
+            System.err.println(x);
         }
     }
 

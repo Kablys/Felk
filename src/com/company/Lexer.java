@@ -25,7 +25,7 @@ public class Lexer {
             return String.format("%s %-10s %s" , "Lexeme", t, c );
         }
         public String toString2() {
-            return String.format(c);
+            return String.format(String.valueOf(t));
         }
     }
 
@@ -366,10 +366,9 @@ public class Lexer {
 //                    tok = getNextToken(tokens);
 //                }
                 Parser parser = new Parser(tokens);
-                System.out.println("labas");
-                Token rootToken = new Token(Lexeme.PROGRAM, "Root of the program");
+                /*Token rootToken = new Token(Lexeme.PROGRAM, "JONAS");
                 Node node = new Node (rootToken);
-                Token rootToken2 = new Token(Lexeme.PROGRAM, "Root of the program2");
+                Token rootToken2 = new Token(Lexeme.PROGRAM, "petras");
                 Node node2 = new Node (rootToken2);
                 Token rootToken3 = new Token(Lexeme.PROGRAM, "Maryte");
                 Node node3 = new Node (rootToken3);
@@ -379,10 +378,9 @@ public class Lexer {
                 node.addChildren(node2);
                 node.addChildren(node3);
                 node2.addChildren(node4);
-                //String output = "";
                 String output = node.toXml(0);
                 //
-                node.toXml2(output);
+                node.toXml2(output);*/
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -30,7 +30,7 @@ public class Node{
         for(int i = 0; i < indent; i++){
             output += ("\t");
         }
-        output += ("<" + token.toString2() + ">" + token.toString2());
+        output += ("<" + token.toString2() + ">" );
         for(Node i : children){
             output += i.toXml(indent + 1);
         }
@@ -56,9 +56,9 @@ public class Node{
         Path p = Paths.get("./logfile.xml");
         byte[] data = output.getBytes();
         try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(p, CREATE))) {
-
+                Files.newOutputStream(p, TRUNCATE_EXISTING, CREATE))) {
             out.write(data, 0, data.length);
+            out.close();
         } catch (IOException x) {
             System.err.println(x);
         }

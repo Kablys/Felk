@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
+    String output = "";
     static Node ast;
     static Integer nTok = 0;
     static List<Lexer.Token> tokens;
@@ -18,7 +19,8 @@ public class Parser {
             System.out.println(t);
         }
         ast = programParse(getNextToken());
-        ast.toXml(0);
+        output = ast.toXml(0);
+        ast.toXml2(output);
     }
 
     public static Lexer.Token getNextToken () {
@@ -35,11 +37,12 @@ public class Parser {
 
 
     public Node programParse (Lexer.Token token){
-        Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
+        Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "program");
         Node node = new Node (rootToken);
         if (arrayOfTypes.contains(token.t)) {
             //node.addChildren(mainParse(getNextToken()));
             node.addChildren(new Node(token));
+            //node.addChildren(new Node( new Lexer.Token(Lexeme.FLOAT, "float")));
             return node;
         }
         else if (token.t == Lexeme.MAIN) {

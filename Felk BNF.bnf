@@ -1,5 +1,4 @@
-<program> 			::= <mainBlock>
-<mainBlock> 		::= <main> | <functions> <main>
+<program> 			::= <main> | <functions> <main>
 <functions>         ::= <function> <functions> | <function>
 
 //	MAIN

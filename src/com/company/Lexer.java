@@ -365,10 +365,10 @@ public class Lexer {
 //                    System.out.println(tok);
 //                    tok = getNextToken(tokens);
 //                }
-                //Parser parser = new Parser(tokens);
+                Parser parser = new Parser(tokens);
+                System.out.println("labas");
                 Token rootToken = new Token(Lexeme.PROGRAM, "Root of the program");
                 Node node = new Node (rootToken);
-
                 Token rootToken2 = new Token(Lexeme.PROGRAM, "Root of the program2");
                 Node node2 = new Node (rootToken2);
                 Token rootToken3 = new Token(Lexeme.PROGRAM, "Root of the program3");

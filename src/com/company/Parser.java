@@ -36,10 +36,11 @@ public class Parser {
     }
 
 
-    public Node programParse (Lexer.Token token){
+    public Node programParse (Integer index){
+
         Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "<program>");
         Node node = new Node (rootToken);
-        if (arrayOfTypes.contains(token.t)) {
+        if (arrayOfTypes.contains(tokens.get(index).t)) {
             node.addChildren(mainParse(getNextToken()));
             node.addChildren(new Node(token));
             return node;

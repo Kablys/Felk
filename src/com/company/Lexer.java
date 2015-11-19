@@ -366,6 +366,7 @@ public class Lexer {
 //                    System.out.println(tok);
 //                    tok = getNextToken(tokens);
 //                }
+
                 Parser parser = new Parser(tokens);
                 /*Token rootToken = new Token(Lexeme.PROGRAM, "JONAS");
                 Node node = new Node (rootToken);

@@ -46,6 +46,7 @@ public enum Lexeme {
     COMMA,
     SCOMMENT,
     MCOMMENT,
-    NUMBER
+    NUMBER,
+    BLOCK
 }
 

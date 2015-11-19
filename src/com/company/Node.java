@@ -13,7 +13,7 @@ public class Node{
     String output = "";
     private Lexer.Token token;
     Node parent = null;
-    private List<Node> children = new ArrayList<Node>();
+    private List<Node> children = new ArrayList<>();
 
     public Node(Lexer.Token token) {
         this.token = token;
@@ -30,9 +30,18 @@ public class Node{
         for(int i = 0; i < indent; i++){
             output += ("\t");
         }
-        output += ("<" + token.toString2() + ">" );
-        for(Node i : children){
-            output += i.toXml(indent + 1);
+        if(token.toString2().equals("IDENTIFIER")) {
+            output += ("<" + token.toXmlString()+ "/>");
+            System.out.println("in identifier");
+            for (Node i : children) {
+                output += i.toXml(indent + 1);
+            }
+            return output;
+        }else{
+            output += ("<" + token.toString2() + ">");
+            for (Node i : children) {
+                output += i.toXml(indent + 1);
+            }
         }
         for(int i = 0; i < indent; i++){
             output += ("\t");
@@ -60,7 +69,7 @@ public class Node{
             out.write(data, 0, data.length);
             out.close();
         } catch (IOException x) {
-            System.err.println(x);
+            x.printStackTrace();
         }
     }
 

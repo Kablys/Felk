@@ -25,8 +25,9 @@ public class Lexer {
             return String.format("%s %-10s %s" , "Lexeme", t, c );
         }
         public String toString2() {
-            return String.format(String.valueOf(t));
+            return String.valueOf(t);
         }
+        public String toXmlString() { return (t +" src= "+ "\""+c+"\"");}
     }
 
     public static String getNum(String s, int i) {
@@ -108,7 +109,7 @@ public class Lexer {
     }
 
     public static List<Token> lex(String input) {
-        List<Token> result = new ArrayList<Token>();
+        List<Token> result = new ArrayList<>();
         for(int i = 0; i < input.length(); ) {
             switch(input.charAt(i)) {
 
@@ -344,8 +345,8 @@ public class Lexer {
     public static void main(String[] args) throws IOException {
         if (args.length == 1){
             //System.out.println(args[0]);
-            BufferedReader br = new BufferedReader(new FileReader(args[0]));
-            try {
+            try {BufferedReader br = new BufferedReader(new FileReader(args[0]));
+
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
 
@@ -381,15 +382,10 @@ public class Lexer {
                 String output = node.toXml(0);
                 //
                 node.toXml2(output);*/
-
+                br.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }finally{
-                br.close();
             }
-
         }
     }
 }

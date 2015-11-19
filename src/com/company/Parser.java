@@ -18,7 +18,7 @@ public class Parser {
         for(Lexer.Token t : tokens) {
             System.out.println(t);
         }
-        ast = programParse(getNextToken());
+        ast = programParse(0);
         output = ast.toXml(0);
         ast.toXml2(output);
     }
@@ -41,11 +41,10 @@ public class Parser {
         Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "<program>");
         Node node = new Node (rootToken);
         if (arrayOfTypes.contains(tokens.get(index).t)) {
-            node.addChildren(mainParse(getNextToken()));
-            node.addChildren(new Node(token));
+            node.addChildren(mainParse(index + 1));
             return node;
         }
-        else if (token.t == Lexeme.MAIN) {
+        else if (tokens.get(index).t == Lexeme.MAIN) {
             node.addChildren(new Node(new Lexer.Token(Lexeme.MAIN, "<main>")));
             return node;
         }
@@ -54,9 +53,9 @@ public class Parser {
         }
     }
 
-    public Node functionParse (Lexer.Token token){
+    public Node functionParse (Integer index){
         //Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
-        Node node = new Node (new Lexer.Token(Lexeme.MAIN, "Mainas"));
+        Node node = new Node (new Lexer.Token(Lexeme.MAIN, "<functions>"));
         return node;
 //        if (token.t == Lexeme.MAIN)
 //
@@ -64,7 +63,7 @@ public class Parser {
 //        return null;
     }
 
-    public Node mainParse (Lexer.Token token){
+    public Node mainParse (Integer index){
         //Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
         Node node = new Node (new Lexer.Token(Lexeme.MAIN, "Mainas"));
         return node;

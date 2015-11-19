@@ -50,6 +50,6 @@ public enum Lexeme {
     BLOCK,
     PARAMETER,
     FUNCTION,
-    EXPRESION
+    EXPRESSION
 }
 

@@ -9,11 +9,15 @@ public class Parser {
     String output = "";
     static Node ast;
     static Integer nTok = 0;
-    int skip = 0;
     static List<Lexer.Token> tokens;
     //static Lexeme[] arrayOfTypes = {com.company.Lexeme.INT, com.company.Lexeme.FLOAT, com.company.Lexeme.STRING, com.company.Lexeme.CHAR, com.company.Lexeme.BOOL, com.company.Lexeme.VOID};
     List<Lexeme> arrayOfTypes = Arrays.asList(com.company.Lexeme.INT, com.company.Lexeme.FLOAT, com.company.Lexeme.STRING,
             com.company.Lexeme.CHAR, com.company.Lexeme.BOOL, com.company.Lexeme.VOID);
+    List<Lexeme> relatOp = Arrays.asList(com.company.Lexeme.EQUAL, com.company.Lexeme.LESS, com.company.Lexeme.MORE,
+            com.company.Lexeme.NOTEQUAL, com.company.Lexeme.MOREEQUAL, com.company.Lexeme.LESSEQUAL);
+    List<Lexeme> addOp = Arrays.asList(com.company.Lexeme.PLUS, com.company.Lexeme.MINUS, com.company.Lexeme.OROP);
+    List<Lexeme> mulOp = Arrays.asList(com.company.Lexeme.MULTIPLY, com.company.Lexeme.DIVISION, com.company.Lexeme.MOD,
+            com.company.Lexeme.ANDOP);
     //myList = {Lexeme.INT, Lexeme.FLOAT, Lexeme.STRING, Lexeme.CHAR, Lexeme.BOOL, Lexeme.VOID};
     public Parser(List<Lexer.Token> programsTokens) {
         tokens = programsTokens;
@@ -21,7 +25,7 @@ public class Parser {
         for(Lexer.Token t : tokens) {
             System.out.println(i++ +" "+t);
         }
-        ast = programParse(36);
+        ast = programParse(0);
         output = ast.toXml(0);
         ast.toXml2(output);
     }
@@ -58,13 +62,24 @@ public class Parser {
 
     public Node functionParse (Integer index){
         Node node = new Node (new Lexer.Token(Lexeme.FUNCTION, "<function>"));
-        node.addChildren(new Node (tokens.get(index - 1)));
-        if (tokens.get(index).t == Lexeme.IDENTIFIER){
-            node.addChildren(new Node (tokens.get(index)));
-            node.addChildren(paramParse(index + 1));
-        }
+        node.addChildren(typeParse(index - 1));
+        index++;
+        node.addChildren(paramParse(index));
+        index = nTok;
+        node.addChildren(blockParse(index+2));
+
+//        node.addChildren(new Node (tokens.get(index - 1)));
+//        if (tokens.get(index).t == Lexeme.IDENTIFIER){
+//            node.addChildren(new Node (tokens.get(index)));
+//            node.addChildren(paramParse(index + 1));
+//        }
         return node;
+//        if (token.t == Lexeme.MAIN)
+//
+//            return null;
+//        return null;
     }
+
 
     public Node paramParse (Integer index){
         Node node = new Node (new Lexer.Token(Lexeme.PARAMETER, "test"));
@@ -72,9 +87,13 @@ public class Parser {
             index++;
             while (tokens.get(index).t != Lexeme.RPAREN) {
                 node.addChildren(typeParse(index));
-                index++;
+                index = index + 2;
+                if (tokens.get(index).t == Lexeme.COMMA) {
+                    index++;
+                }
             }
         }
+        nTok = index;
         return node;
     }
 
@@ -109,7 +128,7 @@ public class Parser {
             Node nodeInt = new Node(tokens.get(index-2));
             node.addChildren(nodeInt);
             nodeInt.addChildren(new Node(tokens.get(index-1)));
-            node.addChildren(new Node(new Lexer.Token(Lexeme.EXPRESION,"Expresion")));
+            node.addChildren(new Node(new Lexer.Token(Lexeme.EXPRESSION,"Expresion")));
             return node;
         }else{
             Node node = new Node(tokens.get(index));
@@ -119,5 +138,4 @@ public class Parser {
         }
 
     }
-
 }

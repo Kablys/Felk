@@ -1,4 +1,4 @@
-int factorial(int n)[
+int factorial(int n, float x)[
   int c;
   int result := 1;
  

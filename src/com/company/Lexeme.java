@@ -47,6 +47,8 @@ public enum Lexeme {
     SCOMMENT,
     MCOMMENT,
     NUMBER,
-    BLOCK
+    BLOCK,
+    PARAMETER,
+    FUNCTION
 }
 

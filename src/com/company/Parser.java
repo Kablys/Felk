@@ -20,7 +20,7 @@ public class Parser {
         for(Lexer.Token t : tokens) {
             System.out.println(i++ +" "+t);
         }
-        ast = programParse(33);
+        ast = programParse(0);
         output = ast.toXml(0);
         ast.toXml2(output);
     }
@@ -43,20 +43,56 @@ public class Parser {
         Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "<program>");
         Node node = new Node (rootToken);
         if (arrayOfTypes.contains(tokens.get(index).t)) {
-            node.addChildren(new Node(tokens.get(index)));
-            return node;
+            node.addChildren(functionParse(index + 1));
         }
         else if (tokens.get(index).t == Lexeme.MAIN) {
             node.addChildren(mainParse(index));
-            return node;
+
         }
         else{
             return node;
         }
+        return node;
     }
 
-    public Node functionParse (Lexer.Token token){
+    public Node functionParse (Integer index){
+        //Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
+        Node node = new Node (new Lexer.Token(Lexeme.FUNCTION, "<function>"));
+        node.addChildren(new Node (tokens.get(index - 1)));
+        if (tokens.get(index).t == Lexeme.IDENTIFIER){
+            node.addChildren(new Node (tokens.get(index)));
+            node.addChildren(paramParse(index + 1));
+        }
+        return node;
+//        if (token.t == Lexeme.MAIN)
+//
+//            return null;
+//        return null;
+    }
+
+    public Node mainParse (Integer index){
+        //Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
         Node node = new Node (new Lexer.Token(Lexeme.MAIN, "Mainas"));
+        return node;
+    }
+
+    public Node paramParse (Integer index){
+        Node node = new Node (new Lexer.Token(Lexeme.PARAMETER, "test"));
+        if (tokens.get(index).t == Lexeme.LPAREN) {
+            index++;
+            while (tokens.get(index).t != Lexeme.RPAREN) {
+                node.addChildren(typeParse(index));
+//                if (arrayOfTypes.contains(tokens.get(index).t)) {
+//                    node.addChildren(new Node (tokens.get(index)));
+//                    index++;
+//                    if (tokens.get(index).t == Lexeme.IDENTIFIER){
+//                        node.addChildren(new Node (tokens.get(index)));
+//                    }
+
+//                }
+                index++;
+            }
+        }
         return node;
     }
 

@@ -37,27 +37,40 @@ public class Parser {
 
 
     public Node programParse (Lexer.Token token){
-        Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "program");
+        Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "<program>");
         Node node = new Node (rootToken);
         if (arrayOfTypes.contains(token.t)) {
-            //node.addChildren(mainParse(getNextToken()));
+            node.addChildren(mainParse(getNextToken()));
             node.addChildren(new Node(token));
-            //node.addChildren(new Node( new Lexer.Token(Lexeme.FLOAT, "float")));
             return node;
         }
         else if (token.t == Lexeme.MAIN) {
-            node.addChildren(new Node(new Lexer.Token(Lexeme.MAIN, "Programos mainas")));
+            node.addChildren(new Node(new Lexer.Token(Lexeme.MAIN, "<main>")));
             return node;
         }
         else{
             return node;
         }
     }
-    public Node mainParse (Lexer.Token token){
-        if (token.t == Lexeme.MAIN)
 
-            return null;
-        return null;
+    public Node functionParse (Lexer.Token token){
+        //Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
+        Node node = new Node (new Lexer.Token(Lexeme.MAIN, "Mainas"));
+        return node;
+//        if (token.t == Lexeme.MAIN)
+//
+//            return null;
+//        return null;
+    }
+
+    public Node mainParse (Lexer.Token token){
+        //Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "The begining");
+        Node node = new Node (new Lexer.Token(Lexeme.MAIN, "Mainas"));
+        return node;
+//        if (token.t == Lexeme.MAIN)
+//
+//            return null;
+//        return null;
     }
 
 }

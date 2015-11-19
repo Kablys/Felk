@@ -384,7 +384,9 @@ public class Lexer {
 
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }finally{
                 br.close();
             }
 

@@ -30,9 +30,8 @@ public class Node{
         for(int i = 0; i < indent; i++){
             output += ("\t");
         }
-        if(token.toString2().equals("IDENTIFIER")) {
+        if((token.toString2().equals("IDENTIFIER"))||(token.toString2().equals("NUMBER"))) {
             output += ("<" + token.toXmlString()+ "/>");
-            System.out.println("in identifier");
             for (Node i : children) {
                 output += i.toXml(indent + 1);
             }

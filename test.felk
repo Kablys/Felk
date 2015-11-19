@@ -10,7 +10,7 @@ int factorial(int n, float x)[
  
 main()[ 
   int number;
-  int fact := 1;
+  int fact := 123;
  
   systemOut("Enter a number to calculate it's factorial\n");
   systemIn("%d", &number);

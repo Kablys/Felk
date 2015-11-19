@@ -49,6 +49,7 @@ public enum Lexeme {
     NUMBER,
     BLOCK,
     PARAMETER,
-    FUNCTION
+    FUNCTION,
+    EXPRESION
 }
 

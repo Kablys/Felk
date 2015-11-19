@@ -32,7 +32,7 @@
 <identifiers>       ::=  ',' <identifier> <identifiers> | ',' <identifier>
 
 //	ASSIGN
-<assign> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
+<z> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
 
 //	FUNCTIONCALL
 <functionCall> 		::= <identifier> '('');' | <identifier> '('<expressions>');'

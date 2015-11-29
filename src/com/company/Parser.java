@@ -29,6 +29,7 @@ public class Parser {
             System.out.println(i++ +" "+t);
         }
         ast = programParse(36);
+        System.out.println("Baigiau Parseri");
         output = ast.toXml(0);
         ast.toXml2(output);
     }
@@ -97,16 +98,28 @@ public class Parser {
         while(tokens.get(index).t != Lexeme.RBRACKET) {
             if (arrayOfTypes.contains(tokens.get(index).t)) {
                 node.addChildren(typeParse(index));
+                index = nTok;
             }
             index++;
+            //node.addChildren(ExpressionParse(index));
+            /*
             if (tokens.get(index).t == Lexeme.COMMA){
                 //System.out.println("Found comma at " + index);
                 index++;
             }
-            if((relatOp.contains(tokens.get(index).t))||(mulOp.contains(tokens.get(index).t))||(addOp.contains(tokens.get(index).t))){
-                node.addChildren(expressionParse(index));
+            if(relatOp.contains(tokens.get(index).t)){
+                node.addChildren(relationOperator(index));
                 index++;
             }
+            if(addOp.contains(tokens.get(index).t)){
+                node.addChildren(addingOperator(index));
+                index++;
+            }
+            if(mulOp.contains(tokens.get(index).t)){
+                System.out.println("init");
+                node.addChildren(multiplicationOperator(index));
+                index++;
+            }*/
         }
         //else{}
         return node;
@@ -118,21 +131,166 @@ public class Parser {
             Node node = new Node(tokens.get(index));
             Node nodeInt = new Node(tokens.get(index - 2));
             node.addChildren(nodeInt);
-            nodeInt.addChildren(new Node(tokens.get(index - 1)));
-            node.addChildren(expressionParse(index));
+            nodeInt.addChildren(new Node(tokens.get(index - 1)));//index 42 identifier
+            node.addChildren(ExpressionParse(index+1));
 
             return node;
         }else{
             Node node = new Node(tokens.get(index));
             index = index + 1;
             node.addChildren(new Node(tokens.get(index)));
+            nTok = index;
             return node;
         }
     }
 
-    public Node expressionParse (int index) {
-        Node node = new Node(new Lexer.Token(Lexeme.EXPRESSION,"Expression"));
-        if(tokens.get(index) simpleExpression)
+    public Node MultiplicationOperator(int index, Node nodePr){
+        Node node = new Node(tokens.get(index));
+        node.addChildren(nodePr);
+        if(tokens.get(index).t == Lexeme.LPAREN) {
+            node.addChildren(Factor(index+1));
+        }else{
+            node.addChildren(Factor(index+1));
+        }
         return node;
     }
+
+    public Node AddingOperator(int index, Node nodePr){
+        Node node = new Node(tokens.get(index));
+        node.addChildren(nodePr);
+        if(tokens.get(index+1).t == Lexeme.LPAREN || tokens.get(index+1).t == Lexeme.RPAREN){
+            node.addChildren(Term(index+2));
+        }else {
+            node.addChildren(Term(index + 1));
+        }
+        return node;
+    }
+
+    public Node RelationOperator(int index, Node nodePr){
+        Node node = new Node(tokens.get(index));
+        node.addChildren(nodePr);
+        node.addChildren(SimpleExpression(index+1));
+        return node;
+    }
+
+    public Node ExpressionParse (int index) {
+        if(tokens.get(index).t == Lexeme.LPAREN){
+            index++;
+            Node nodeSave = new Node(tokens.get(index));
+            Node node = new Node(new Lexer.Token(Lexeme.EXPRESSION,"Expression"));
+            while(tokens.get(index).t != Lexeme.SEMICOLON){
+                if(relatOp.contains(tokens.get(index+1))) {
+                    node.addChildren(RelationOperator(index, nodeSave));
+                }
+                else{
+                    node.addChildren(SimpleExpression(index));
+                }
+                index = nTok;
+            }
+            return node;
+        }else {
+            Node nodeSave = new Node(tokens.get(index));
+            Node node = new Node(new Lexer.Token(Lexeme.EXPRESSION, "Expression"));
+            while (tokens.get(index).t != Lexeme.SEMICOLON) {
+                if (relatOp.contains(tokens.get(index + 1))) {
+                    node.addChildren(RelationOperator(index, nodeSave));
+                } else {
+                    node.addChildren(SimpleExpression(index));
+                }
+                index = nTok;
+            }
+            return node;
+        }
+    }
+
+    public Node SimpleExpression (int index){
+        Node node = new Node(new Lexer.Token(Lexeme.SIMPLEEXPRESSION, "SimpleExpression"));
+        Node nodeSave = new Node(tokens.get(index));
+//        Node nodeSave = nodePr;
+        index++;
+        if(addOp.contains(tokens.get(index).t)){
+            node.addChildren(AddingOperator(index, nodeSave));
+        }else{
+            node.addChildren(Term(index-1));
+        }
+        return node;
+    }
+
+    public Node Term(int index){
+        Node node = new Node(new Lexer.Token(Lexeme.TERM, "Term"));
+        Node nodeSave = new Node(tokens.get(index));
+        index++;
+        if(tokens.get(index).t == Lexeme.LPAREN || tokens.get(index).t == Lexeme.RPAREN) {
+            index++;
+            if (mulOp.contains(tokens.get(index).t)) {
+                node.addChildren(MultiplicationOperator(index, nodeSave));
+            } else {
+                node.addChildren(Factor(index - 2));
+            }
+            return node;
+        }else {
+            if (mulOp.contains(tokens.get(index).t)) {
+                node.addChildren(MultiplicationOperator(index, nodeSave));
+            } else {
+                node.addChildren(Factor(index - 2));
+            }
+            return node;
+        }
+    }
+
+    public Node Factor(int index){
+        Node node = new Node(new Lexer.Token(Lexeme.FACTOR, "Factor"));
+        if(tokens.get(index).t == Lexeme.LPAREN){
+            node.addChildren(ExpressionParse(index));
+        }
+        else if(tokens.get(index).t == Lexeme.IDENTIFIER){
+            if(tokens.get(index+1).t == Lexeme.LPAREN){
+                node.addChildren(functionCall(index));
+            }
+            else{
+                node.addChildren(new Node(tokens.get(index)));
+                if(tokens.get(index+1).t == Lexeme.LPAREN || tokens.get(index+1).t == Lexeme.RPAREN){
+                    nTok = index + 2;
+                }else {
+                    nTok = index + 1;
+                }
+            }
+        }else if(tokens.get(index).t == Lexeme.STRING){
+            node.addChildren(new Node(tokens.get(index)));
+            nTok = index+1;
+        }else if(tokens.get(index).t == Lexeme.NUMBER){
+            node.addChildren(new Node(tokens.get(index)));
+            nTok = index+1;
+        }else if(tokens.get(index).t == Lexeme.MINUS){
+            Node nodeMinus = new Node(tokens.get(index));
+            if(tokens.get(index+1).t == Lexeme.NUMBER || tokens.get(index+1).t == Lexeme.FLOAT) {
+                nodeMinus.addChildren(new Node(tokens.get(index + 1)));
+                node.addChildren(nodeMinus);
+            }// Add throw
+            nTok = index+1;
+        }else if(tokens.get(index).t == Lexeme.FLOAT){
+            node.addChildren(new Node(tokens.get(index)));
+            nTok = index+1;
+        }else if(tokens.get(index).t == Lexeme.BOOL){
+            node.addChildren(new Node(tokens.get(index)));
+            nTok = index+1;
+        }
+        else if (tokens.get(index).t == Lexeme.SEMICOLON){
+            nTok = index+1;
+        }else if(tokens.get(index).t == Lexeme.RPAREN){
+            node.addChildren(new Node(tokens.get(index-1)));
+            nTok = index;
+        }else if(addOp.contains(tokens.get(index)) || mulOp.contains(tokens.get(index))){
+            node.addChildren(ExpressionParse(index+1));
+        }
+        return node;
+    }
+
+    public Node functionCall(int index){
+        Node node = new Node(tokens.get(index));
+
+        return node;
+    }
+
+
 }

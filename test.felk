@@ -8,14 +8,18 @@ int factorial(int n, float x)[
   return result;
 ]
  
-main()[ 
-  int number;
-  int fact := 123;
+main()[
+  int a := a*(b/c);
+  //int number;
+  //int fact := 123;
 
-  systemOut("Enter a number to calculate it's factorial\n");
-  systemIn("%d", &number);
- 
-  systemOut("%d! = %ld\n", number, factorial(number)); //reikia sutvarkyti funkciju kvietima kaip parametra
+  //systemOut("Enter a number to calculate it's factorial\n");
+  //systemIn("%d", &number);
+
+
+
+
+  //systemOut("%d! = %ld\n", number, factorial(number)); //reikia sutvarkyti funkciju kvietima kaip parametra
  
   return;
 ]

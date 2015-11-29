@@ -11,8 +11,8 @@
 <control> 			::= <for> | <while> | <if>
 <for> 				::= 'for' <identifier> ':=' <forList> '[' <block> ']' | 'for' <forList>  '[' <block> ']'
 <forList> 			::= <initialValue> 'to' <finalValue> | <initialValue> 'downto' <finalValue>
-<initialValue>		::= <expression>
-<finalValue> 		::= <expression>
+<initialValue>		::= (<expression>)
+<finalValue> 		::= (<expression>)
 //	WHILE
 <while> 			::= 'while' <expression> '[' <block> ']'
 //	IF
@@ -20,7 +20,7 @@
                         'if' '('<expression>')' '[' <block> ']' 'else' <if>
 
 //	EXPRESSION
-<expression> 		::= <simpleExpression> | <expression> <relationalOperator> <expression>
+<expression> 		::= <simpleExpression> | <simpleExpression> <relationalOperator> <simpleExpression>
 <relationalOperator>::= '==' | '!=' | '<' | '<=' | '>=' | '>'
 <simpleExpression> 	::= <term> | <sign> <term> | <simpleExpression> <addingOp> <term>
 <term> 				::= <factor> | <term> <multiplyingOp> <factor>
@@ -32,7 +32,7 @@
 <identifiers>       ::=  ',' <identifier> <identifiers> | ',' <identifier>
 
 //	ASSIGN
-<z> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
+<assign> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
 
 //	FUNCTIONCALL
 <functionCall> 		::= <identifier> '('');' | <identifier> '('<expressions>');'

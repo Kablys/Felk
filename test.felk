@@ -1,5 +1,6 @@
 int factorial(int n, float x)[
-  return a + false + 1.2 + "hai";
+systemOut("mes esame cia");
+int := "Enter a number to calculate it's factorial\n";
   systemIn(number);
   while a>b [
     int a;
@@ -15,8 +16,10 @@ int factorial(int n, float x)[
   ]
   int c;
   int result := 2;
-
-
+ 
+  /*for c := 1 to n[
+    result := result * c+1;
+  ]*/
   return result;
 ]
 
@@ -30,8 +33,12 @@ main()[
   int number := (1 + 2)*4;
   //int some := 1*b+c+(d*e*f)-g-h/i-j;
   //int fact := (1*2*3)+(2 * 4);
-  //systemOut("Enter a number to calculate it's factorial\n");
-  /systemIn(number);
+  systemOut("Enter a number to calculate it's factorial\n");
+  for c:= a < b [
+  int forloop;
+  ]
+  systemIn(number);
+
   //systemOut("%d! = %ld\n", number, factorial(number)); //reikia sutvarkyti funkciju kvietima kaip parametra
  
   return a;

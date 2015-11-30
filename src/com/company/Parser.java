@@ -53,25 +53,8 @@ public class Parser {
         Node node = new Node (rootToken);
         while (arrayOfTypes.contains(tokens.get(index).t)){
             node.addChildren(functionParse(index + 1));
-            //index = nTok+1;
-            //System.out.println(index);
-            //Node functionblock = (blockParse(index));
-            //node.addChildren(functionblock);
             index = nTok + 1;
-            /*if(tokens.get(index+1) != null){
-                node.addChildren(blockParse(index+1));
-            }
-            index = nTok;
-            System.out.println(index);
-            if(tokens.get(index).t == tokens.size()) {
-                if (tokens.get(index + 1).t != Lexeme.MAIN) {
-                    System.out.println("repeat");
-                    node.addChildren(programParse(index + 1));
-                }
-            else {
-                node.addChildren(programParse(index + 1));
-            }
-            }*/
+
         }
        if ((tokens.get(index).t) == Lexeme.MAIN) {
             System.out.println("Gavom main");
@@ -128,6 +111,7 @@ public class Parser {
             }
             else if (tokens.get(index).t == Lexeme.FOR){
                 node.addChildren(forBlock(index));
+                index=nTok-1;
             }else if(tokens.get(index+1).t == Lexeme.ASSIG){
                 Node assignNode = new Node(tokens.get(index+1));
                 node.addChildren(assignNode);
@@ -164,6 +148,11 @@ public class Parser {
                 node.addChildren(systemInNode);
                 systemInNode.addChildren(expression(index+1));
                 index = nTok;
+            }else if (tokens.get(index).t == Lexeme.SYSTEMOUT){
+                Node systemOut = new Node(tokens.get(index));
+                node.addChildren(systemOut);
+                systemOut.addChildren(expression(index+1));
+                index = nTok+1;
             }
             index++;
         }

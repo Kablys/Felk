@@ -14,7 +14,8 @@ int c;
  
 main()[
   //int name := (a+b)*c;
-  int number := 1 + 2*4;
+  int some := 2;
+  int number := (1 + 2)*4;
   //int some := 1*b+c+(d*e*f)-g-h/i-j;
   //int fact := (1*2*3)+(2 * 4);
   //systemOut("Enter a number to calculate it's factorial\n");

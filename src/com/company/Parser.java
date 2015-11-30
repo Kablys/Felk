@@ -29,7 +29,7 @@ public class Parser {
         for(Lexer.Token t : tokens) {
             System.out.println(i++ +" "+t);
         }
-        ast = programParse(45);
+        ast = programParse(0);
         System.out.println("Baigiau Parseri");
         output = ast.toXml(0);
         ast.toXml2(output);
@@ -54,7 +54,7 @@ public class Parser {
         if (arrayOfTypes.contains(tokens.get(index).t)) {
             node.addChildren(functionParse(index + 1));
             //index = nTok+1;
-            System.out.println(index);
+            //System.out.println(index);
             //Node functionblock = (blockParse(index));
             //node.addChildren(functionblock);
             index = nTok;
@@ -89,7 +89,9 @@ public class Parser {
             node.addChildren(paramParse(index + 1));
             index = nTok;
             node.addChildren(blockParse(index));
+            index = nTok;
         }
+        nTok = index;
         return node;
     }
 
@@ -117,7 +119,7 @@ public class Parser {
 
     public Node blockParse (int index){
         Node node = new Node (new Lexer.Token(Lexeme.BLOCK, "Block"));
-        index= index + 2;
+        index= index + 1;
         while(tokens.get(index).t != Lexeme.RBRACKET) {
             if (arrayOfTypes.contains(tokens.get(index).t)) {
                 node.addChildren(typeParse(index));
@@ -128,26 +130,13 @@ public class Parser {
             }else if (tokens.get(index).t == Lexeme.IF){
                 node.addChildren(ifBlock(index));
             }
+            else if(tokens.get(index+1).t == Lexeme.ASSIG){
+                Node assignNode = new Node(tokens.get(index+1));
+                node.addChildren(assignNode);
+                assignNode.addChildren(new Node(tokens.get(index)));
+                assignNode.addChildren(expression(index+2));
+            }
             index++;
-            //node.addChildren(ExpressionParse(index));
-            /*
-            if (tokens.get(index).t == Lexeme.COMMA){
-                //System.out.println("Found comma at " + index);
-                index++;
-            }
-            if(relatOp.contains(tokens.get(index).t)){
-                node.addChildren(relationOperator(index));
-                index++;
-            }
-            if(addOp.contains(tokens.get(index).t)){
-                node.addChildren(addingOperator(index));
-                index++;
-            }
-            if(mulOp.contains(tokens.get(index).t)){
-                System.out.println("init");
-                node.addChildren(multiplicationOperator(index));
-                index++;
-            }*/
         }
         nTok = index;
         //else{}
@@ -189,7 +178,9 @@ public class Parser {
             forAssigNode.addChildren(forToNode(index+1));
             index = nTok+1;
             node.addChildren(blockParse(index));
+            index = nTok+1;
         }
+        nTok = index;
         return node;
     }
 

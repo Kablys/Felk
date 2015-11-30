@@ -158,6 +158,11 @@ public class Parser {
                 node.addChildren(reNode);
                 reNode.addChildren(expression(index + 1));
                 index = nTok;
+            }else if(tokens.get(index).t == Lexeme.SYSTEMIN){
+                Node systemInNode = new Node(tokens.get(index));
+                node.addChildren(systemInNode);
+                systemInNode.addChildren(expression(index+1));
+                index = nTok;
             }
             index++;
         }
@@ -232,6 +237,7 @@ public class Parser {
     public Node expression (int index) {
         Node node = new Node(new Lexer.Token(Lexeme.EXPRESSION, "Expression"));
         while((tokens.get(index).t != Lexeme.SEMICOLON)||(tokens.get(index).t != Lexeme.LBRACKET)|| (tokens.get(index).t != Lexeme.RBRACKET)){
+            int search= 0;
             if(relatOp.contains(tokens.get(index+1).t)){
                 node = new Node(tokens.get(index+1));
                 node.addChildren(new Node(tokens.get(index)));
@@ -241,8 +247,16 @@ public class Parser {
                 node = new Node(tokens.get(index));
                 node.addChildren(SimpleExpression1(index+1));
                 break;
-            }else if((tokens.get(index).t == Lexeme.NUMBER || tokens.get(index).t == Lexeme.FLOAT || tokens.get(index).t == Lexeme.STRING || tokens.get(index).t == Lexeme.IDENTIFIER )&& tokens.get(index+1).t == Lexeme.SEMICOLON){
-                System.out.println("SEMICOLON");
+            }else if((tokens.get(index).t == Lexeme.NUMBER || tokens.get(index).t == Lexeme.FLOAT ||
+                    tokens.get(index).t == Lexeme.STRING || tokens.get(index).t == Lexeme.IDENTIFIER )&&
+                    tokens.get(index+1).t == Lexeme.SEMICOLON){
+                node.addChildren(new Node(tokens.get(index)));
+                index++;
+                nTok = index;
+                break;
+            }else if((tokens.get(index).t == Lexeme.NUMBER || tokens.get(index).t == Lexeme.FLOAT ||
+                    tokens.get(index).t == Lexeme.STRING || tokens.get(index).t == Lexeme.IDENTIFIER )&&
+                    tokens.get(index+2).t == Lexeme.SEMICOLON){
                 node.addChildren(new Node(tokens.get(index)));
                 index++;
                 nTok = index;

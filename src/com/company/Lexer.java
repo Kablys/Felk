@@ -28,6 +28,7 @@ public class Lexer {
             return String.valueOf(t);
         }
         public String toXmlString() { return (t +" src= "+ "\""+c+"\"");}
+        public String toXmlString2() { return (t +" src= "+ c);}
     }
 
     public static String getNum(String s, int i) {

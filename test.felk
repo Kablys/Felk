@@ -1,4 +1,16 @@
 int factorial(int n, float x)[
+  while a>b [
+    int a;
+    ]
+
+  if a<b [
+  int ifEntered;
+  ]
+  else[
+  int elseBlock;
+  ]
+  if c<s [
+  ]
   int c;
   int result := 2;
  

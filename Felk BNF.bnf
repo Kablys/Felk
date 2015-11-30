@@ -9,10 +9,11 @@
 <sentence>          ::= <control> | <declaration> | <assign> | <functionCall> | <return> | <statement>
 //	CONTROL
 <control> 			::= <for> | <while> | <if>
-<for> 				::= 'for' <identifier> ':=' <forList> '[' <block> ']' | 'for' <forList>  '[' <block> ']'
-<forList> 			::= <initialValue> 'to' <finalValue> | <initialValue> 'downto' <finalValue>
-<initialValue>		::= (<expression>)
-<finalValue> 		::= (<expression>)
+<for> 				::= 'for' <identifier> ':=' <forList> '[' <block> ']' //| 'for' <forList>  '[' <block> ']'
+<forList>          ::= <identifier> 'to' <identifier>
+//<forList> 			::= <initialValue> 'to' <finalValue> | <initialValue> 'downto' <finalValue>
+//<initialValue>		::= (<expression>)
+//<finalValue> 		::= (<expression>)
 //	WHILE
 <while> 			::= 'while' <expression> '[' <block> ']'
 //	IF

@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.management.NotificationEmitter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class Parser {
         for(Lexer.Token t : tokens) {
             System.out.println(i++ +" "+t);
         }
-        ast = programParse(36);
+        ast = programParse(0);
         System.out.println("Baigiau Parseri");
         output = ast.toXml(0);
         ast.toXml2(output);
@@ -48,17 +49,25 @@ public class Parser {
 
 
     public Node programParse (Integer index){
-
         Lexer.Token rootToken = new Lexer.Token(Lexeme.PROGRAM, "<program>");
         Node node = new Node (rootToken);
         if (arrayOfTypes.contains(tokens.get(index).t)) {
-            node.addChildren(functionParse(index+1));
-            //return node;
-        }
-        else if (tokens.get(index).t == Lexeme.MAIN) {
+            node.addChildren(functionParse(index + 1));
+            index = nTok+1;
+            System.out.println(index);
+            Node functionblock = (blockParse(index));
+            node.addChildren(functionblock);
+            index = nTok;
+            if(tokens.get(index+1) != null){
+                node.addChildren(blockParse(index+1));
+            }
+            index = nTok;
+            System.out.println(index);
+            node.addChildren(programParse(index+1));
+        } else if ((tokens.get(index).t) == Lexeme.MAIN) {
+            System.out.println("here");
             node.addChildren(mainParse(index));
-        }
-        else{
+        } else {
             return node;
         }
         return node;
@@ -100,6 +109,9 @@ public class Parser {
                 node.addChildren(typeParse(index));
                 index = nTok;
             }
+            else if (tokens.get(index).t == Lexeme.FOR){
+                node.addChildren(forBlock(index));
+            }
             index++;
             //node.addChildren(ExpressionParse(index));
             /*
@@ -121,9 +133,37 @@ public class Parser {
                 index++;
             }*/
         }
+        nTok = index;
         //else{}
         return node;
     }
+
+    public Node forToNode(int index){
+        Node node = new Node(tokens.get(index+1));
+        index++;
+        node.addChildren(new Node(tokens.get(index-1)));
+        node.addChildren(new Node(tokens.get(index+1)));
+        nTok = index+1;
+        return node;
+    }
+
+
+    public Node forBlock(int index){
+        System.out.println("forBlock");
+        Node node = new Node(tokens.get(index));
+        if(tokens.get(index+2).t == Lexeme.ASSIG){
+            index = index+2;
+            Node forAssigNode = new Node(tokens.get(index));
+            node.addChildren(forAssigNode);
+            forAssigNode.addChildren(new Node(tokens.get(index-1)));
+            forAssigNode.addChildren(forToNode(index+1));
+            index = nTok+1;
+            node.addChildren(blockParse(index));
+        }
+        return node;
+    }
+
+
 
     public Node typeParse (int index){
         if (tokens.get(index+2).t == Lexeme.ASSIG){

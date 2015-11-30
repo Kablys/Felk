@@ -11,8 +11,8 @@ int factorial(int n, float x)[
 main()[
   //int name := (a+b)*c;
   //int number;
-  int some := 1*b+c+d*e*f-g-h/i-j;
-  int fact := 1+2+3;
+  //int some := 1*b+c+(d*e*f)-g-h/i-j;
+  int fact := (1*2)*3+(2 * 4);
   systemOut("Enter a number to calculate it's factorial\n");
   systemIn("%d", &number);
 

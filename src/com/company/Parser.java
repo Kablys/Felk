@@ -176,18 +176,32 @@ public class Parser {
                 index++;
                 node.addChildren(expression(index));
             }else if (addOp.contains(tokens.get(index + 1).t)) {
-                node = new Node(tokens.get(index + 1));
-                node.addChildren(new Node(tokens.get(index)));
-                node.addChildren(addingNode(index + 2));
+                if(tokens.get(index).t == Lexeme.RPAREN){
+                    node = new Node(tokens.get(index));
+                    Node newNode = new Node(tokens.get(index+1));
+                    node.addChildren(newNode);
+                    newNode.addChildren(addingNode(index+2));
+                }else {
+                    node = new Node(tokens.get(index + 1));
+                    node.addChildren(new Node(tokens.get(index)));
+                    node.addChildren(addingNode(index + 2));
 //                break;
+                }
             } else if (addOp.contains(tokens.get(index).t)) {
                 node = new Node(tokens.get(index));
                 node.addChildren(addingNode(index + 1));
 //                break;
             }else if(mulOp.contains(tokens.get(index+1).t)){
-                index++;
-                node = new Node(tokens.get(index));
-                node.addChildren(addingNode(index-1));
+                if(tokens.get(index).t == Lexeme.RPAREN){
+                    node = new Node(tokens.get(index));
+                    Node newNode = new Node(tokens.get(index+1));
+                    node.addChildren(newNode);
+                    newNode.addChildren(addingNode(index+2));
+                }else {
+                    index++;
+                    node = new Node(tokens.get(index));
+                    node.addChildren(addingNode(index - 1));
+                }
             }
             else {
                 node.addChildren(addingNode(index));
@@ -200,10 +214,17 @@ public class Parser {
     public Node addingNode(int index){
         Node node = new Node(tokens.get(index));
         if(mulOp.contains(tokens.get(index+1).t)){
-            index++;
-            node = new Node(tokens.get(index));
-            node.addChildren(new Node(tokens.get(index-1)));
-            node.addChildren(mulNode(index+1));
+            if(tokens.get(index).t == Lexeme.RPAREN) {
+                node = new Node(tokens.get(index));
+                Node newNode = new Node(tokens.get(index + 1));
+                node.addChildren(newNode);
+                newNode.addChildren(mulNode(index + 2));
+            }else {
+                index++;
+                node = new Node(tokens.get(index));
+                node.addChildren(new Node(tokens.get(index - 1)));
+                node.addChildren(mulNode(index + 1));
+            }
         }else if(mulOp.contains(tokens.get(index).t)){
             node = new Node(tokens.get(index));
             node.addChildren(mulNode(index+1));

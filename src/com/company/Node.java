@@ -30,7 +30,7 @@ public class Node{
         for(int i = 0; i < indent; i++){
             output += ("\t");
         }
-        if((token.toString2().equals("IDENTIFIER"))||(token.toString2().equals("NUMBER"))) {
+        if((token.toString2().equals("IDENTIFIER"))||(token.toString2().equals("NUMBER"))||(token.toString2().equals("FLOAT"))||(token.toString2().equals("STRING"))||(token.toString2().equals("TRUE"))||(token.toString2().equals("FALSE"))) {
             output += ("<" + token.toXmlString()+ "/>");
             for (Node i : children) {
                 output += i.toXml(indent + 1);

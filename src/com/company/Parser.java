@@ -153,6 +153,11 @@ public class Parser {
                     elseNode.addChildren(blockParse(index+2));
                     index = nTok;
                 }
+            }else if(tokens.get(index).t == Lexeme.RETURN){
+                Node reNode = new Node(tokens.get(index));
+                node.addChildren(reNode);
+                reNode.addChildren(expression(index + 1));
+                index = nTok;
             }
             index++;
         }

@@ -132,7 +132,7 @@ public class Parser {
             Node nodeInt = new Node(tokens.get(index - 2));
             node.addChildren(nodeInt);
             nodeInt.addChildren(new Node(tokens.get(index - 1)));//index 42 identifier
-            node.addChildren(SimpleExpression1(index+1));
+            node.addChildren(expression(index+1));
             return node;
         }else{
             Node node = new Node(tokens.get(index));
@@ -150,7 +150,7 @@ public class Parser {
             if(relatOp.contains(tokens.get(index+1).t)){
                 node = new Node(tokens.get(index+1));
                 node.addChildren(new Node(tokens.get(index)));
-                node.addChildren((SimpleExpression(index+2)));
+                node.addChildren((SimpleExpression1(index+2)));
                 break;
             }else if(relatOp.contains(tokens.get(index).t)){
                 node = new Node(tokens.get(index));
@@ -184,7 +184,12 @@ public class Parser {
                 node = new Node(tokens.get(index));
                 node.addChildren(addingNode(index + 1));
 //                break;
-            } else {
+            }else if(mulOp.contains(tokens.get(index+1).t)){
+                index++;
+                node = new Node(tokens.get(index));
+                node.addChildren(addingNode(index-1));
+            }
+            else {
                 node.addChildren(addingNode(index));
 //                break;
             }
@@ -240,7 +245,7 @@ public class Parser {
 
 
 
-
+/*
 
     public Node MultiplicationOperator(int index, Node nodePr){
         Node node = new Node(tokens.get(index));
@@ -435,6 +440,7 @@ public class Parser {
         //}
         return node;
     }
+    */
 
     public Node functionCall(int index){
         Node node = new Node(tokens.get(index));

@@ -1,6 +1,6 @@
 int factorial(int n, float x)[
   systemOut("mes esame cia");
-  int := "Enter a number to calculate it's factorial\n";
+  int stringas := "Enter a number to calculate it's factorial\n";
   systemIn(number + 1);
   while a>b [
     int a;

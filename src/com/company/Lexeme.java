@@ -58,6 +58,7 @@ public enum Lexeme {
     TERM,
     FACTOR,
     VARIABLE,
-    IDENTIFIERS
+    IDENTIFIERS,
+    TYPE
 }
 

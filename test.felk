@@ -1,11 +1,13 @@
-/*int factorial(int n, float x)[
+int factorial(int n)[
   systemOut("mes esame cia");
-  int := "Enter a number to calculate it's factorial\n";
-  systemIn(number+1);
-  while a>b [
+  int a := ("Enter a number to calculate it's factorial\n");
+  //int a := a+b+c(1+2);
+  systemIn(number);
+  /*while a>b [
     int a;
-    ]
-
+    ];*/
+  xx(1+2);
+    a := ("a");
   if a<b [
   int ifEntered;
   ]
@@ -17,7 +19,7 @@
   int c;
   int result := 2;
  
-  for c := 1 to n[
+  for c := x to n[
     result := result * c+1;
   ]
   return result;
@@ -26,7 +28,7 @@
 int somethin()[
 int c;
 ]
-*/
+
 main()[
   int name := (a+b)*c +h;
   int h := b + a < C+d;
@@ -37,7 +39,7 @@ main()[
   int fact := (1*2*3) + (2*4);
   systemOut("Enter a number to calculate it's factorial\n");
   systemOut(a+b);
-  for c:= a < b [
+  for c:= a to b [
   int forloop;
   ]
   //systemIn(number);

@@ -175,7 +175,18 @@ public class Parser {
                 } else {
                     throw new UnexpectedLexem(Lexeme.IDENTIFIER, index, tokens.get(index));
                 }
-            }else if (tokens.get(index).t == Lexeme.WHILE){
+            }else if (tokens.get(index).t == Lexeme.IDENTIFIER){
+                if(tokens.get(index+1).t == Lexeme.LPAREN){
+                    Node funNode = new Node (new Lexer.Token(Lexeme.FUNCAL, "Function call"));
+                    funNode.addChildren(new Node(tokens.get(index)));
+                    node.addChildren(funNode);
+                    funNode.addChildren(expression(index+1,numOfPairs));
+                    index = nTok;//buvo +1
+                }else
+                    throw new UnexpectedLexem(Lexeme.LPAREN, index+1, tokens.get(index+1));
+
+            }
+            else if (tokens.get(index).t == Lexeme.WHILE){
                 Node whileNode = new Node(tokens.get(index));
                 node.addChildren(whileNode);
                 whileNode.addChildren(expression(index+1,numOfPairs));
@@ -686,9 +697,11 @@ public class Parser {
         return node;
     }
 
-    public Node functionCall(int index){
-        Node node = new Node(tokens.get(index));
-
+    public Node functionCall(int index) throws UnexpectedLexem {
+        Node node = new Node (new Lexer.Token(Lexeme.FUNCAL, "Function call"));
+        node.addChildren(new Node(tokens.get(index)));
+        node.addChildren(expression(index+1,numOfPairs));
+        index = nTok;//buvo +1
         return node;
     }
 

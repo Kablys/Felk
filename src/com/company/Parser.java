@@ -322,17 +322,10 @@ public class Parser {
             //int search= 0;
             else if(relatOp.contains(tokens.get(index+1).t)){
                 node = new Node(tokens.get(index+1));
-                if((tokens.get(index).t != Lexeme.NUMBER) && (tokens.get(index).t != Lexeme.STRING) &&  (tokens.get(index).t != Lexeme.FLOAT)
-                        && (tokens.get(index).t != Lexeme.IDENTIFIER) && (tokens.get(index).t != Lexeme.LPAREN) &&
-                        (tokens.get(index).t != Lexeme.RPAREN) && (tokens.get(index).t != Lexeme.SEMICOLON) && !addOp.contains(tokens.get(index).t)
-                        && !mulOp.contains(tokens.get(index).t) && !relatOp.contains((tokens.get(index).t))){
-                    throw new UnexpectedLexem(null, index,tokens.get(index));
-                }
-                    node.addChildren(new Node(tokens.get(index)));
-                    node.addChildren((SimpleExpression1(index + 2, numOfPairs)));
-                    index = nTok;
-                    break;
-
+                node.addChildren(new Node(tokens.get(index)));
+                node.addChildren((SimpleExpression1(index + 2, numOfPairs)));
+                index = nTok;
+                break;
             }else if(relatOp.contains(tokens.get(index).t)){
                 node = new Node(tokens.get(index));
                 if((tokens.get(index+1).t != Lexeme.NUMBER) && (tokens.get(index+1).t != Lexeme.STRING) &&  (tokens.get(index+1).t != Lexeme.FLOAT)
@@ -386,10 +379,15 @@ public class Parser {
         else if(tokens.get(index).t == Lexeme.RPAREN){
             numOfPairs--;
             index++;
-        }
+        }/*else if(tokens.get(index+1).t == Lexeme.LPAREN){
+            numOfPairs++;
+            index++;
+        }else if (tokens.get(index+1).t == Lexeme.RPAREN){
+            numOfPairs--;
+            index++;
+        }*/
 
-
-        else if(arrayOfTypes.contains(tokens.get(index).t)){
+        if(arrayOfTypes.contains(tokens.get(index).t)){
             numOfError++;
             throw new UnexpectedLexem(null, index, tokens.get(index));
         }else if (relatOp.contains(tokens.get(index).t)){
@@ -406,7 +404,18 @@ public class Parser {
         } else if (addOp.contains(tokens.get(index).t)) {
             node = new Node(tokens.get(index));
             node.addChildren(addingNode(index + 1, numOfPairs));
-        }else if(mulOp.contains(tokens.get(index+1).t)){
+        }else if (tokens.get(index+1).t == Lexeme.RPAREN){
+
+            if(addOp.contains(tokens.get(index+2).t) || mulOp.contains(tokens.get(index+2).t)){
+                index++;
+                numOfPairs--;
+                Node adding = new Node(tokens.get(index+1));
+                adding.addChildren(expression(index+2,numOfPairs));
+                node.addChildren(adding);
+                index = nTok;
+            }
+        }
+        else if(mulOp.contains(tokens.get(index+1).t)){
             if(tokens.get(index).t == Lexeme.RPAREN){
                 node = new Node(tokens.get(index));
                 Node newNode = new Node(tokens.get(index+1));
@@ -480,9 +489,15 @@ public class Parser {
             if(tokens.get(index+1).t == Lexeme.SEMICOLON){
                 throw new UnexpectedLexem(null, index+1,tokens.get(index+1));
             }else{
-                node = new Node(tokens.get(index));
-                node.addChildren(new Node(tokens.get(index - 1)));
-                node.addChildren(mulNode(index + 1, numOfPairs));//maybe needs index change
+                if(tokens.get(index-1).t == Lexeme.RPAREN){
+                    Node mult = new Node(tokens.get(index));
+                    node.addChildren(mult);
+                    mult.addChildren(mulNode(index+1,numOfPairs));
+                }else {
+                    node = new Node(tokens.get(index));
+                    node.addChildren(new Node(tokens.get(index - 1)));
+                    node.addChildren(mulNode(index + 1, numOfPairs));//maybe needs index change
+                }
             }
         }else if(mulOp.contains(tokens.get(index).t)){
             //index++;

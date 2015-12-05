@@ -36,15 +36,15 @@
 <assign> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
 
 //	FUNCTIONCALL
-<functionCall> 		::= <identifier> '('');' | <identifier> '('<expressions>');'
-<expressions>       ::= ',' <expression> <expressions> | ',' <expression>
+<functionCall> 		::= <identifier> '('');' | <identifier> '('<expression>');'
+//<expressions>       ::= ',' <expression> <expressions> | ',' <expression>
 
 //	RETURN
 <return> 			::= 'return'';' | 'return' <expression> ';'
 
 //    STATEMENT
 <statement>         ::= <systemOut> | <systemIn>;
-<systemOut>         ::=  'systemOut' '(' <expressions> ['"\n"'] ');'
+<systemOut>         ::=  'systemOut' '(' <expression> ');'
 <systemIn>          ::= 'systemIn' '('<identifier>')'';'
 
 //	FUNCTION
@@ -52,8 +52,10 @@
 <functionType> 		::= 'void' | <type>
 
 //	NAMING
-<parameter> 		::= <type> <identifier> <identifierWithType> | <type> <identifier>
-<identifierWithType>::= ',' <type> <identifier> <identifierWithType> | ',' <type> <identifier>
+
+<parameter> 		::= <type> <identifier>
+//<parameter> 		::= <type> <identifier> <identifierWithType> | <type> <identifier>
+//<identifierWithType>::= ',' <type> <identifier> <identifierWithType> | ',' <type> <identifier>
 <type> 				::= 'int' | 'string' | 'float' | 'char' | 'bool'
 <identifier>		::= <character> <charAndDigit> | <character>
 <charAndDigit>      ::= <character> <charAndDigit> | <digit> <charAndDigit> | <character> | <digit>

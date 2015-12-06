@@ -28,21 +28,21 @@ int c;
 ]
 */
 main()[
-  int name := (a+b)*c +h;
+int a := (((a+b)));
+int a := ("asdasda");
+  int name := (a<b)*c + d;
   int h := b + a < C+d;
   int a := b*c + a;
   int some :=  + a;
   int number := (1 + 2)*4;
-  int some := (1+2)*3*4*;
+  int some := (1+2)*3*4*; //should be an error
   int fact := (1*2*3) + (2*4);
   systemOut("Enter a number to calculate it's factorial\n");
   systemOut(a+b);
-  for c:= a < b [
+  for c:= a to b [
   int forloop;
   ]
-  //systemIn(number);
-
-  //systemOut("%d! = %ld\n", number, factorial(number)); //reikia sutvarkyti funkciju kvietima kaip parametra
+  systemIn(number);
 
   return a;
 ]

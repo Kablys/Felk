@@ -28,7 +28,7 @@ public class Node{
 
     public String toXml(int indent){
         for(int i = 0; i < indent; i++){
-            output += ("\t");
+            //output += ("\t");
         }
         if((token.toString2().equals("IDENTIFIER"))||(token.toString2().equals("NUMBER"))||(token.toString2().equals("FLOAT"))||(token.toString2().equals("TRUE"))||(token.toString2().equals("FALSE"))) {
             output += ("<" + token.toXmlString()+ "/>");
@@ -50,7 +50,7 @@ public class Node{
             }
         }
         for(int i = 0; i < indent; i++){
-            output += ("\t");
+            //output += ("\t");
         }
         output += ("</" + token.toString2() + ">");
         return output;

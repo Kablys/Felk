@@ -1,7 +1,9 @@
-int factorial(int n)[
-  systemOut("mes esame cia");
-  int a := ("Enter a number to calculate it's factorial\n");
-  int a := a+b+c+(1+2);
+int factorial(int d,int h,int i, int f)[
+  //systemOut("mes esame cia");
+  //int a := ("Enter a number to calculate it's factorial\n");
+  //int a:= a+b+;
+  int a :=b * function(c+d(),e,f)*;
+  f(a+1,b,c*as+c);
   systemIn(number);
   while a>b [
     int a;

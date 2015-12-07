@@ -1,11 +1,11 @@
 int factorial(int n)[
   systemOut("mes esame cia");
   int a := ("Enter a number to calculate it's factorial\n");
-  //int a := a+b+c(1+2);
+  int a := a+b+c+(1+2);
   systemIn(number);
-  /*while a>b [
+  while a>b [
     int a;
-    ];*/
+    ];
   xx(1+2);
     a := ("a");
   if a<b [
@@ -30,14 +30,16 @@ int c;
 ]
 
 main()[
-int a := (((a+b)));
+int vienas := (((2+3)));
+int test := a;
+systemOut(a+"");
 int a := ("asdasda");
-  int name := (a<b)*c + d;
+  int name := (a<b)*(c + d);
   int h := b + a < C+d;
   int a := b*c + a;
   int some :=  + a;
   int number := (1 + 2)*4;
-  int some := (1+2)*3*4*; //should be an error
+  int some := (1+2)*3*4;
   int fact := (1*2*3) + (2*4);
   systemOut("Enter a number to calculate it's factorial\n");
   systemOut(a+b);

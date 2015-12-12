@@ -2,9 +2,12 @@ int factorial(int d,int h,int i, int f)[
   //systemOut("mes esame cia");
   //int a := ("Enter a number to calculate it's factorial\n");
   //int a:= a+b+;
-  int a :=b * function(c+d(),e,f)*;
-  f(a+1,b,c*as+c);
-  systemIn(number);
+  //int a :=b * function(c+d(),e,f);
+  int a:= 100/10*5+2;
+  //int b:= (a*b)+c+d*f;
+  //int a:= a*f(a*v,b+c)*c;
+  /*systemIn(number);
+  return a;
   while a>b [
     int a;
     ];
@@ -28,11 +31,11 @@ int factorial(int d,int h,int i, int f)[
 ]
 
 int somethin()[
-int c;
+int c;*/
 ]
 
 main()[
-int vienas := (((2+3)));
+/*int vienas := (((2+3)));
 int test := a;
 systemOut(a+"");
 int a := ("asdasda");
@@ -50,5 +53,5 @@ int a := ("asdasda");
   ]
   systemIn(number);
 
-  return a;
+  return a;*/
 ]

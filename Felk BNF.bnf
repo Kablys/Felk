@@ -36,8 +36,8 @@
 <assign> 			::= <type> <identifier> ':=' <expression> ';' | <identifier> ':=' <expression> ';'
 
 //	FUNCTIONCALL
-<functionCall> 		::= <identifier> '('');' | <identifier> '('<expression>');'
-//<expressions>       ::= ',' <expression> <expressions> | ',' <expression>
+<functionCall> 		::= <identifier> '('');' | <identifier> '('<expressions>');'
+<expressions>       ::= ',' <expression> <expressions> | ',' <expression>
 
 //	RETURN
 <return> 			::= 'return'';' | 'return' <expression> ';'

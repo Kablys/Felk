@@ -1,10 +1,11 @@
 int factorial(int d,int h,int i, int f)[
   float c:= 10.00;
   string a:= ("some");
-  /*int c := (100*10*5+10/5);
+  int a := f(a+b);
+  int c := (100*10*5+10/5);
   int a := f(a+b(),b());
   systemOut("mes esame cia");
-  int a := ("Enter a number to calculate it's factorial\n");
+  /*int a := ("Enter a number to calculate it's factorial\n");
   int as := a+function(b+c());
   int some:= a+function(a+b,function2());
   int a := b + function(c+d,a*e(),f);

@@ -423,7 +423,7 @@ public class Parser {
                     if(checking) {
                         checking = false;
                         index = tmp;
-                        node = functionCall(index, numOfPairs);
+                        node.addChildren(functionCall(index, numOfPairs));
                         //functionNode.addChildren(expression(index+1,numOfPairs));
                         //numOfPairs--;
                         //nTok = nTok-1;
@@ -447,6 +447,7 @@ public class Parser {
                         index = tmp;
                         Node funNode = new Node(new Lexer.Token(Lexeme.FUNCAL, "Function call"));
                         funNode.addChildren(new Node(tokens.get(index)));
+                        node.addChildren(funNode);
                         int functionPairs = 1 ;
 
                         index++;
@@ -455,7 +456,7 @@ public class Parser {
                         //nTok = index;
                         numOfPairs++;
                         index = nTok;
-                        node = funNode;
+                        //node = funNode;
                         functionCheck = false;
 //                        return node;
                     }

@@ -30,13 +30,13 @@ public class Node{
         for(int i = 0; i < indent; i++){
             //output += ("\t");
         }
-        if((token.toString2().equals("IDENTIFIER"))||(token.toString2().equals("NUMBER"))||(token.toString2().equals("FLOAT"))||(token.toString2().equals("TRUE"))||(token.toString2().equals("FALSE"))) {
+        if((token.toString2().equals("IDENTIFIER"))||(token.toString2().equals("NUMBER"))||(token.toString2().equals("FLOATNUMBER"))||(token.toString2().equals("TRUE"))||(token.toString2().equals("FALSE"))) {
             output += ("<" + token.toXmlString()+ "/>");
             for (Node i : children) {
                 output += i.toXml(indent + 1);
             }
             return output;
-        }else if((token.toString2().equals("STRING"))){
+        }else if((token.toString2().equals("CHARSET"))){
             output +=("<"  +token.toXmlString2()+"/>");
             for (Node i : children) {
                 output += i.toXml(indent + 1);

@@ -244,7 +244,7 @@ public class Lexer {
                     String string = getString(input, i+1);
 
                     if (string.substring(string.length() - 1).equals("\"")) {
-                        result.add(new Token(Lexeme.STRING, '"' + string));
+                        result.add(new Token(Lexeme.CHARSET, '"' + string));
                         i += string.length() + 1;
                         break;
                     }
@@ -315,7 +315,7 @@ public class Lexer {
                     } else if (Character.isDigit(input.charAt(i))){
                         String number = getNum(input, i);
                         if (number.indexOf('.') > -1){
-                            result.add(new Token(Lexeme.FLOAT, number));
+                            result.add(new Token(Lexeme.FLOATNUMBER, number));
                         } else
                             result.add(new Token(Lexeme.NUMBER, number.replaceFirst("^0+(?!$)", "")));
 

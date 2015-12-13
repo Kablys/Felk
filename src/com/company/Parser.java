@@ -391,7 +391,7 @@ public class Parser {
                 && (tokens.get(index).t != Lexeme.IDENTIFIER) && (tokens.get(index).t != Lexeme.LPAREN) &&
                 (tokens.get(index).t != Lexeme.RPAREN) && (tokens.get(index).t != Lexeme.SEMICOLON) && !addOp.contains(tokens.get(index).t)
                 && !mulOp.contains(tokens.get(index).t) && !relatOp.contains((tokens.get(index).t))&& (tokens.get(index).t != Lexeme.COMMA)){
-            throw new UnexpectedLexem(null, index,tokens.get(index));
+            throw new UnexpectedLexem(Lexeme.EXPRESSION, index,tokens.get(index));
         }
         Node node = new Node(new Lexer.Token(Lexeme.EXPRESSION, "Expression"));
         while(true){
@@ -488,7 +488,7 @@ public class Parser {
                         && (tokens.get(index+1).t != Lexeme.IDENTIFIER) && (tokens.get(index+1).t != Lexeme.LPAREN) &&
                         (tokens.get(index+1).t != Lexeme.RPAREN) && (tokens.get(index+1).t != Lexeme.SEMICOLON) && !addOp.contains(tokens.get(index+1).t)
                         && !mulOp.contains(tokens.get(index+1).t) && !relatOp.contains((tokens.get(index+1).t))){
-                    throw new UnexpectedLexem(null, index+1,tokens.get(index+1));
+                    throw new UnexpectedLexem(null, index+1,tokens.get(index+1)); // jei gerai suprantau cia tas pats tikrinimas kaip simpleexpresion
                 }
                 node.addChildren(SimpleExpression1(index+1, numOfPairs));
                 break;
@@ -505,7 +505,7 @@ public class Parser {
             }
             else if(arrayOfTypes.contains(tokens.get(index).t)){
                 numOfError++;
-                throw new UnexpectedLexem(null, index, tokens.get(index));
+                throw new UnexpectedLexem(Lexeme.TYPE, index, tokens.get(index));
             }else if(tokens.get(index+1).t == Lexeme.COMMA){
                 node.addChildren(new Node(tokens.get(index)));
                 nTok = index+1;
@@ -553,7 +553,7 @@ public class Parser {
                 && (tokens.get(index).t != Lexeme.IDENTIFIER) && (tokens.get(index).t != Lexeme.LPAREN) &&
                 (tokens.get(index).t != Lexeme.RPAREN) && (tokens.get(index).t != Lexeme.SEMICOLON) && !addOp.contains(tokens.get(index).t)
                 && !mulOp.contains(tokens.get(index).t) && !relatOp.contains((tokens.get(index).t))&&(tokens.get(index).t != Lexeme.COMMA)){
-            throw new UnexpectedLexem(null, index,tokens.get(index));
+            throw new UnexpectedLexem(Lexeme.SIMPLEEXPRESSION, index,tokens.get(index));
         }
         Node node = new Node(tokens.get(index));
         if(tokens.get(index).t == Lexeme.LPAREN){
@@ -574,7 +574,7 @@ public class Parser {
         }
         if(arrayOfTypes.contains(tokens.get(index).t)){
             numOfError++;
-            throw new UnexpectedLexem(null, index, tokens.get(index));
+            throw new UnexpectedLexem(Lexeme.TYPE, index, tokens.get(index));
         }else if (relatOp.contains(tokens.get(index).t)){
             index++;
             node.addChildren(new Node(tokens.get(index)));
@@ -643,7 +643,7 @@ public class Parser {
                 node = new Node(tokens.get(index));
                 nTok = index ;
             }else {
-                if(mulOp.contains(tokens.get(index).t) || addOp.contains(tokens.get(index).t)){
+                if(mulOp.contains(tokens.get(index).t) || addOp.contains(tokens.get(index).t)){  // ? Cia tikrina ar nepasibaigia operatorium +*
                     throw new UnexpectedLexem(null, index, tokens.get(index));
                 }
                 index = index + 1;
@@ -665,7 +665,7 @@ public class Parser {
                 && (tokens.get(index).t != Lexeme.IDENTIFIER) && (tokens.get(index).t != Lexeme.LPAREN) &&
                 (tokens.get(index).t != Lexeme.RPAREN) && (tokens.get(index).t != Lexeme.SEMICOLON) && !addOp.contains(tokens.get(index).t)
                 && !mulOp.contains(tokens.get(index).t) && !relatOp.contains((tokens.get(index).t))&&(tokens.get(index).t!=Lexeme.COMMA)){
-            throw new UnexpectedLexem(null, index,tokens.get(index));
+            throw new UnexpectedLexem(Lexeme.ADDINGOPERATOR, index,tokens.get(index));
         }
         Node node = new Node(tokens.get(index));
         if(tokens.get(index).t == Lexeme.COMMA){
@@ -758,7 +758,7 @@ public class Parser {
             index++;
         }else if(arrayOfTypes.contains(tokens.get(index).t)){
             numOfError++;
-            throw new UnexpectedLexem(null, index, tokens.get(index));
+            throw new UnexpectedLexem(Lexeme.TYPE, index, tokens.get(index));
         }
         if (relatOp.contains(tokens.get(index+1).t)){
             if(tokens.get(index).t == Lexeme.SEMICOLON){

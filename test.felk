@@ -1,16 +1,18 @@
-int factorial(int d,int h,int i, int f)[
-  float c:= 10.00;
+int factorial(int d,int h)[
+  int div:=100/10*5;
+  int a:= a*(d<c+e)+y;//a*b+c<d;
+  /*float c:= 10.00;
   string a:= ("some");
-  int a := f(a+b);
+  int a := a+f(a,b);
   int c := (100*10*5+10/5);
   int a := f(a+b(),b());
   systemOut("mes esame cia");
-  /*int a := ("Enter a number to calculate it's factorial\n");
+  int a := ("Enter a number to calculate it's factorial\n");
   int as := a+function(b+c());
   int some:= a+function(a+b,function2());
   int a := b + function(c+d,a*e(),f);
   int a:= 100/10*5+2;
-
+  int a := function(a,b);
   int b:= (a*b)+c+d*f;
   int a:= b*f(b,a(a,h))*d;
   systemIn(number);
@@ -34,15 +36,15 @@ xx(1+2);
   for c := x to n[
     result := result * c+1;
   ]
-  return result;
+  return result;*/
 ]
 
 int somethin()[
-int c;*/
+int c;
 ]
 
 main()[
-  int vienas := (((2+3)));
+  /*int vienas := (((2+3)));
   int test := a;
   systemOut(a+"");
   int a := ("asdasda");
@@ -60,5 +62,5 @@ main()[
   ]
   systemIn(number);
 
-  return a;
+  return a;*/
 ]

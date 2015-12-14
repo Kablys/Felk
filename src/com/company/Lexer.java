@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 //import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -369,25 +370,30 @@ public class Lexer {
 //                }
 
                 Parser parser = new Parser(tokens);
-                /*Token rootToken = new Token(Lexeme.PROGRAM, "JONAS");
-                Node node = new Node (rootToken);
-                Token rootToken2 = new Token(Lexeme.PROGRAM, "petras");
-                Node node2 = new Node (rootToken2);
-                Token rootToken3 = new Token(Lexeme.PROGRAM, "Maryte");
-                Node node3 = new Node (rootToken3);
-                Token rootToken4 = new Token(Lexeme.PROGRAM, "vaikas");
-                Node node4 = new Node (rootToken4);
 
-                node.addChildren(node2);
-                node.addChildren(node3);
-                node2.addChildren(node4);
-                String output = node.toXml(0);
-                //
-                node.toXml2(output);*/
+                StringBuffer rubyOut = new StringBuffer();
+
+                Process p = Runtime.getRuntime().exec("/home/domas/.rvm/rubies/ruby-head/bin/ruby semanti_checker.rb");
+                p.waitFor();
+
+                BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+                String lines = "";
+                while ((lines = reader.readLine())!= null) {
+                    rubyOut.append(lines + "\n");
+                }
+
+                System.out.println(rubyOut.toString());
+
                 br.close();
+                reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e){
+                e.printStackTrace();
             }
+
         }
     }
 }

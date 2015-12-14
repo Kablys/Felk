@@ -373,7 +373,7 @@ public class Lexer {
 
                 StringBuffer rubyOut = new StringBuffer();
 
-                Process p = Runtime.getRuntime().exec("/home/domas/.rvm/rubies/ruby-head/bin/ruby semanti_checker.rb");
+                Process p = Runtime.getRuntime().exec("cmd");
                 p.waitFor();
 
                 BufferedReader reader =
@@ -393,7 +393,6 @@ public class Lexer {
             } catch (InterruptedException e){
                 e.printStackTrace();
             }
-
         }
     }
 }

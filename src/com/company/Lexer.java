@@ -1,10 +1,7 @@
 package com.company;
 
-import java.io.BufferedReader;
+import java.io.*;
 //import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -369,30 +366,38 @@ public class Lexer {
 //                    tok = getNextToken(tokens);
 //                }
 
+                PrintWriter writer = new PrintWriter("LexemeFile.txt", "UTF-8");
+                int i = 0;
+                for(Lexer.Token t : tokens) {
+                    writer.println(t);
+                }
+                writer.close();
+
                 Parser parser = new Parser(tokens);
 
                 StringBuffer rubyOut = new StringBuffer();
 
-                Process p = Runtime.getRuntime().exec("cmd");
-                p.waitFor();
+//                Process p = Runtime.getRuntime().exec("cmd");
+//                p.waitFor();
 
-                BufferedReader reader =
-                        new BufferedReader(new InputStreamReader(p.getInputStream()));
+//                BufferedReader reader =
+//                        new BufferedReader(new InputStreamReader(p.getInputStream()));
 
                 String lines = "";
-                while ((lines = reader.readLine())!= null) {
-                    rubyOut.append(lines + "\n");
-                }
+//                while ((lines = reader.readLine())!= null) {
+//                    rubyOut.append(lines + "\n");
+///                }
 
-                System.out.println(rubyOut.toString());
+//                System.out.println(rubyOut.toString());
 
                 br.close();
-                reader.close();
+//                reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e){
-                e.printStackTrace();
             }
+//            } catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
         }
     }
 }

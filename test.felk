@@ -1,16 +1,18 @@
 int factorial(int d,int h)[
   int div:=100/10*5;
-  int a:= a*(d<c+e)+y;//a*b+c<d;
-  /*float c:= 10.00;
-  string a:= ("some");
-  int a := a+f(a,b);
-  int c := (100*10*5+10/5);
-  int a := f(a+b(),b());
-  systemOut("mes esame cia");
-  int a := ("Enter a number to calculate it's factorial\n");
-  int as := a+function(b+c());
-  int some:= a+function(a+b,function2());
-  int a := b + function(c+d,a*e(),f);
+  int a:= a*b+c<d; //
+  int same:= a+(d*(c*e))*y;// sutvarkyti
+  int a:= function(a(e,f()));
+  float c:= 10.00;
+  string a:= "some";
+  int a := f()<d;
+  int c := (100+10)*1+2*(1+2);//*5+10/5;
+  int a := f(a,b(),b());
+  /*systemOut("mes esame cia");
+  int a := "Enter a number to calculate it's factorial\n";
+  int as := a+function(c());
+  int some:= a+function(a,function2());
+  int a := b + function(c,d,a,e(),f);
   int a:= 100/10*5+2;
   int a := function(a,b);
   int b:= (a*b)+c+d*f;
@@ -19,9 +21,9 @@ int factorial(int d,int h)[
   return a;
   while a>b [
     int a;
-    ];
-xx(1+2);
-    a := ("a");
+  ];
+  xx(12);
+  char a := "a";
   if a<b [
   int ifEntered;
   ]
@@ -35,8 +37,8 @@ xx(1+2);
  
   for c := x to n[
     result := result * c+1;
-  ]
-  return result;*/
+  ]*/
+  return result;
 ]
 
 int somethin()[
@@ -44,23 +46,22 @@ int c;
 ]
 
 main()[
-  /*int vienas := (((2+3)));
+  int vienas := (((2+3)));
   int test := a;
   systemOut(a+"");
-  int a := ("asdasda");
+  int a := "asdasda";
   int name := (a<b)*(c + d);
   int h := b + a < C+d;
   int a := b*c + a;
-  int some :=  + a;
+  //int some :=  + a;
   int number := (1 + 2)*4;
   //int some := (1+2)*3*4;
-  //int fact := (1*2*3) + (2*4);
+  int fact := (1*2*3) + (2*4);
   systemOut("Enter a number to calculate it's factorial\n");
   systemOut(a+b);
   for c:= a to b [
   int forloop;
   ]
   systemIn(number);
-
-  return a;*/
+  return a;
 ]

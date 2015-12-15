@@ -60,7 +60,7 @@ public enum Lexeme {
     VARIABLE,
     IDENTIFIERS,
     TYPE,
-    FUNCAL,
+    FUNCTIONCAL,
     CHARSET,
     FLOATNUMBER
 }

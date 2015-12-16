@@ -374,8 +374,7 @@ public class Lexer {
                 writer.close();
 
                 Parser parser = new Parser(tokens);
-
-                StringBuffer rubyOut = new StringBuffer();
+//                StringBuffer rubyOut = new StringBuffer();
 
 //                Process p = Runtime.getRuntime().exec("cmd");
 //                p.waitFor();
@@ -383,7 +382,7 @@ public class Lexer {
 //                BufferedReader reader =
 //                        new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-                String lines = "";
+//                String lines = "";
 //                while ((lines = reader.readLine())!= null) {
 //                    rubyOut.append(lines + "\n");
 ///                }

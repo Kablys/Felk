@@ -1143,6 +1143,10 @@ public class Parser {
             else if(tokens.get(index+1).t == Lexeme.RPAREN){
                 numOfPairs--;
                 index++;
+                if(mulOp.contains(tokens.get(index+1).t)) {
+                    //index++;
+                    continue;
+                }
                 if(tokens.get(index+1).t != Lexeme.SEMICOLON || tokens.get(index + 1).t != Lexeme.RPAREN) {
                     nTok = index;
                     node.addChildren(nodeFirst);
@@ -1153,6 +1157,7 @@ public class Parser {
                 if(tokens.get(index+1).t == Lexeme.LPAREN) {
                     //Node functionNode = new Node(tokens.get(index));
                     //nodeFirst = (functionNode);
+                    numOfPairs++;
                     int i = 0;
                     nTok = index;
                     nodeFirst = (function(index, 0));
@@ -1189,6 +1194,7 @@ public class Parser {
                         return node;
                     }
                     else if(tokens.get(index+3).t == Lexeme.RPAREN) {
+                        number--;
                         index = index + 3;
                         nTok = index;
                         return node;
@@ -1208,6 +1214,7 @@ public class Parser {
             }
         }
         if(tokens.get(index+1).t == Lexeme.RPAREN){
+            number--;
             if(tokens.get(index+2).t == Lexeme.COMMA) {
                 nTok = index + 2;
                 return node;

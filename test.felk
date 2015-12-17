@@ -1,4 +1,6 @@
 int factorial(int d,int h)[
+  int xz:= b*f(b,a(a,h))*d;
+  int c := 100*10*5+10/5;
   int div:=100/10*5;
   int a:= a*b+c<d; //
   int same:= a+(d*(c*e))*y;// sutvarkyti

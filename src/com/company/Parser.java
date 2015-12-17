@@ -1146,6 +1146,7 @@ public class Parser {
                 if(mulOp.contains(tokens.get(index+1).t)) {
                     //index++;
                     continue;
+
                 }
                 if(tokens.get(index+1).t != Lexeme.SEMICOLON || tokens.get(index + 1).t != Lexeme.RPAREN) {
                     nTok = index;

@@ -1022,6 +1022,7 @@ public class Parser {
     public Node SimpleExpression(int index,Lexeme lexema) throws UnexpectedLexem {
         Node node = new Node(new Lexer.Token(Lexeme.SIMPLEEXPRESSION, "SimpleExpression"));
         Node nodeFirst = new Node(tokens.get(index));
+        if(firstTime)
         if(tokens.get(index).t == Lexeme.LPAREN){
             nodeFirst = Term(index,lexema);
             index=nTok;
@@ -1035,8 +1036,10 @@ public class Parser {
                         addingNode.addChildren(Term(index+2, lexema));
                         index=nTok;
                     } else{
-                        addingNode.addChildren(new Node(tokens.get(index + 2)));
-                        index = index + 2;
+                        addingNode.addChildren(Term(index+2,lexema));
+//                        addingNode.addChildren(new Node(tokens.get(index + 2)));
+                        index = nTok;
+//    index = index + 2;
                     }
                     nodeFirst = addingNode;
                 }else {
@@ -1146,7 +1149,6 @@ public class Parser {
                 if(mulOp.contains(tokens.get(index+1).t)) {
                     //index++;
                     continue;
-
                 }
                 if(tokens.get(index+1).t != Lexeme.SEMICOLON || tokens.get(index + 1).t != Lexeme.RPAREN) {
                     nTok = index;

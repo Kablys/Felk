@@ -1,4 +1,7 @@
 int factorial(int d,int h)[
+  int c := (100*10*5+10/5);
+  int pirmas := h(q,z);
+  int antras := a+function(b);
   int xz:= b*f(b,a(a,h))*d;
   int c := 100*10*5+10/5;
   int div:=100/10*5;

@@ -139,7 +139,7 @@ def funcal_check(element)
         exp_check(e, par[i].type)
       end
     else
-      puts 'function ' + element.at_xpath('IDENTIFIER')['src'].green + ' needs ' + par_c.to_s.green + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s.red
+      puts 'function ' + element.at_xpath('IDENTIFIER')['src'].green + ' needs ' + par.count.to_s.green + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s.red
     end
   else
     puts 'declaration of function ' + element.at_xpath('IDENTIFIER')['src'].red + ' not found'
@@ -258,6 +258,11 @@ def patch (doc)
     doc.xpath("//#{type}").each do |i| 
       i.name = 'TYPE'
       i['class'] = type
+    end
+  end
+  doc.xpath('//EXPRESSION').each do |e|
+    if e.children.count == 0
+      e.remove
     end
   end
   doc

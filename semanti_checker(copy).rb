@@ -40,7 +40,7 @@ def check_return (block)
   if block.at_xpath('RETURN')
     return;
   else
- #   puts 'function ' + block.at_xpath('../IDENTIFIER')['src'] + ' is missing ' + 'return' + ' statement'
+ #   puts 'function ' + block.at_xpath('../IDENTIFIER')['src'].green + ' is missing ' + 'return'.red + ' statement'
   end
 end
 
@@ -60,11 +60,11 @@ def exp_check2 (element)
         @prev_var = e['src']
       else
         if @same_type != type
-          puts @prev_var + ' and ' + e['src'] + ' types should be same(' + @same_type + ' ' + type + ' )'
+          puts @prev_var.green + ' and ' + e['src'].green + ' types should be same(' + @same_type.red + ' ' + type.red + ' )'
         end
       end
     else
-      puts e['src'] + ' is not defined'
+      puts e['src'].red + ' is not defined'
       break
     end
   end
@@ -91,7 +91,7 @@ def add_function(f)
                           f.at_xpath('TYPE')['class'],
                           param)
   else
-    puts 'function ' + f.at_xpath('IDENTIFIER')['src'] + ' already exists'
+    puts 'function ' + f.at_xpath('IDENTIFIER')['src'].green + ' already exists'
   end
 end
 
@@ -119,7 +119,7 @@ def add_variable(v, t = '')# t tam atvejui kai kintamasis nera explicit defined
                           t)
     end
   else
-    puts 'variable ' + v.at_xpath('IDENTIFIER')['src'] + ' already exists'
+    puts 'variable ' + v.at_xpath('IDENTIFIER')['src'].green + ' already exists'
   end
 end
 
@@ -139,10 +139,10 @@ def funcal_check(element)
         exp_check(e, par[i].type)
       end
     else
-      puts 'function ' + element.at_xpath('IDENTIFIER')['src'] + ' needs ' + par_c.to_s + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s
+      puts 'function ' + element.at_xpath('IDENTIFIER')['src'].green + ' needs ' + par_c.to_s.green + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s.red
     end
   else
-    puts 'declaration of function ' + element.at_xpath('IDENTIFIER')['src'] + ' not found'
+    puts 'declaration of function ' + element.at_xpath('IDENTIFIER')['src'].red + ' not found'
   end
 end
 
@@ -162,11 +162,11 @@ def for_check(element)
         @prev_var = e['src']
       else
         unless @same_type == type
-          puts @prev_var + ' and ' + e + ' types should be same(' + @same_type + ' ' + type + ' )'
+          puts @prev_var.green + ' and ' + e.green + ' types should be same(' + @same_type.red + ' ' + type.red + ' )'
         end
       end
     else
-      puts e['src'] + ' is not defined'
+      puts e['src'].red + ' is not defined'
       break
     end
   end
@@ -192,10 +192,10 @@ end
 def sin_check(element)
   if (type = is_variable?(element.at_xpath('IDENTIFIER')['src']))
     unless type == 'STRING'
-      puts "systemIn needs argument of type " + "string" + " got" + type
+      puts "systemIn needs argument of type " + "string".green + " got" + type.red
     end
   else
-    puts "systemIn got undefined argument " + element.at_xpath('IDENTIFIER')['src']
+    puts "systemIn got undefined argument " + element.at_xpath('IDENTIFIER')['src'].red
   end
 end
 

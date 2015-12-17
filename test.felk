@@ -1,6 +1,6 @@
 int factorial(int d,int h)[
   int c := (100*10*5+10/5);
-  int pirmas := h(q,z);
+  /*int pirmas := h(q,z);
   int antras := a+function(b);
   int xz:= b*f(b,a(a,h))*d;
   int c := 100*10*5+10/5;
@@ -12,7 +12,7 @@ int factorial(int d,int h)[
   string a:= "some";
   int a := f()<d;
   int c := (100+10)*1+2*(1+2);//*5+10/5;
-  int a := f(a,b(),b());
+  int a := f(a,b(),b());*/
   /*systemOut("mes esame cia");
   int a := "Enter a number to calculate it's factorial\n";
   int as := a+function(c());
@@ -23,26 +23,26 @@ int factorial(int d,int h)[
   int b:= (a*b)+c+d*f;
   int a:= b*f(b,a(a,h))*d;
   systemIn(number);
-  return a;
-  while a>b [
+  return a;*/
+  while (a>b) [
     int a;
-  ];
-  xx(12);
+  ]
+  //xx(12);
   char a := "a";
-  if a<b [
-  int ifEntered;
+  if (a<b) [
+      int ifEntered;
   ]
   else[
   int elseBlock;
   ]
-  if c<s [
+  if (c<s) [
   ]
   int c;
   int result := 2;
  
   for c := x to n[
     result := result * c+1;
-  ]*/
+  ]
   return result;
 ]
 

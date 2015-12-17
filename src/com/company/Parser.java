@@ -185,7 +185,7 @@ public class Parser {
 
             else if (tokens.get(index).t == Lexeme.IDENTIFIER){
                 if(tokens.get(index+1).t == Lexeme.LPAREN){
-                    node.addChildren(functionCall(index,0));
+                    node.addChildren(function(index,0));
                     index = nTok;
                 }else
                     throw new UnexpectedLexem(Lexeme.LPAREN, index+1, tokens.get(index+1));
@@ -194,15 +194,15 @@ public class Parser {
             else if (tokens.get(index).t == Lexeme.WHILE){
                 Node whileNode = new Node(tokens.get(index));
                 node.addChildren(whileNode);
-                whileNode.addChildren(expression(index+1,numOfPairs));
+                whileNode.addChildren(expres(index+1,Lexeme.RPAREN));
                 index = nTok+1;
                 whileNode.addChildren(blockParse(index));
                 index = nTok;
             }else if(tokens.get(index).t == Lexeme.IF) {
                 Node ifNode = new Node(tokens.get(index));
                 node.addChildren(ifNode);
-                ifNode.addChildren(expression(index + 1,numOfPairs));
-                index = nTok;
+                ifNode.addChildren(expres(index + 1,Lexeme.RPAREN));
+                index = nTok+1;
                 ifNode.addChildren(blockParse(index));
                 index = nTok;
                 if(tokens.get(index+1).t == Lexeme.ELSE){
@@ -1035,11 +1035,13 @@ public class Parser {
                     if (tokens.get(index + 2).t == Lexeme.LPAREN) {
                         addingNode.addChildren(Term(index+2, lexema));
                         index=nTok;
-                    } else{
+                    }else if (tokens.get(index+3).t == Lexeme.RPAREN){
+                        addingNode.addChildren(new Node(tokens.get(index + 2)));
+                        index = index + 2;
+                    }
+                    else{
                         addingNode.addChildren(Term(index+2,lexema));
-//                        addingNode.addChildren(new Node(tokens.get(index + 2)));
                         index = nTok;
-//    index = index + 2;
                     }
                     nodeFirst = addingNode;
                 }else {

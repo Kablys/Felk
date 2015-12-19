@@ -1215,6 +1215,7 @@ public class Parser {
                 int counter = 0;
 //                Nauja dalis
                 node.addChildren(nodeFirst);
+                index++;
                 while(true){
                     if(tokens.get(index).t == Lexeme.LPAREN){
                         counter++;
@@ -1223,6 +1224,22 @@ public class Parser {
                         counter--;
                         if(counter ==0){
                             break;
+                        }
+                    }
+                    else if(tokens.get(index).t == Lexeme.IDENTIFIER) {
+                        if (tokens.get(index + 1).t == Lexeme.LPAREN) {
+                            int counter2 = 0;
+                            while (true) {
+                                if (tokens.get(index).t == Lexeme.LPAREN) {
+                                    counter2++;
+                                } else if (tokens.get(index).t == Lexeme.RPAREN) {
+                                    counter2--;
+                                    if (counter2 == 0) {
+                                        break;
+                                    }
+                                }
+                                index++;
+                            }
                         }
                     }
                     else if(tokens.get(index).t == Lexeme.COMMA){

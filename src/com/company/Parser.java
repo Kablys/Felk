@@ -175,7 +175,7 @@ public class Parser {
                 node.addChildren(assignNode);
                 if (tokens.get(index).t == Lexeme.IDENTIFIER) {
                     assignNode.addChildren(new Node(tokens.get(index)));
-                    assignNode.addChildren(expression(index + 2, numOfPairs));
+                    assignNode.addChildren(expres(index + 2, Lexeme.SEMICOLON));
 //                    assignNode.addChildren(expres(index+2,Lexeme.SEMICOLON));
                     index = nTok;
                 } else {
@@ -195,6 +195,7 @@ public class Parser {
                 Node whileNode = new Node(tokens.get(index));
                 node.addChildren(whileNode);
                 firstTime = true;
+                changed = true;
                 whileNode.addChildren(expres(index+1,Lexeme.RPAREN));
                 index = nTok+1;
                 whileNode.addChildren(blockParse(index));
@@ -203,6 +204,7 @@ public class Parser {
                 Node ifNode = new Node(tokens.get(index));
                 node.addChildren(ifNode);
                 firstTime = true;
+                changed = true;
                 ifNode.addChildren(expres(index + 1,Lexeme.RPAREN));
                 index = nTok+1;
                 ifNode.addChildren(blockParse(index));

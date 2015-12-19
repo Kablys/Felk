@@ -194,6 +194,7 @@ public class Parser {
             else if (tokens.get(index).t == Lexeme.WHILE){
                 Node whileNode = new Node(tokens.get(index));
                 node.addChildren(whileNode);
+                firstTime = true;
                 whileNode.addChildren(expres(index+1,Lexeme.RPAREN));
                 index = nTok+1;
                 whileNode.addChildren(blockParse(index));
@@ -201,6 +202,7 @@ public class Parser {
             }else if(tokens.get(index).t == Lexeme.IF) {
                 Node ifNode = new Node(tokens.get(index));
                 node.addChildren(ifNode);
+                firstTime = true;
                 ifNode.addChildren(expres(index + 1,Lexeme.RPAREN));
                 index = nTok+1;
                 ifNode.addChildren(blockParse(index));

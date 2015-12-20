@@ -1272,15 +1272,15 @@ public class Parser {
                     }
                 }
                 else if(comaCount == 0){
-                    if(tokens.get(index+3).t == Lexeme.RPAREN){
-                        nodeFirst.addChildren(new Node(tokens.get(index+2)));
-                        index = index+2;
-                    }else {
+                    //if(tokens.get(index+3).t == Lexeme.RPAREN){
+                    //    nodeFirst.addChildren(new Node(tokens.get(index+2)));
+                    //    index = index+2;
+                    //}else {
                         nodeFirst.addChildren(expres(index + 2, Lexeme.RPAREN));
                         index = nTok;
                     }
 
-                }
+                //}
 //                Nauja dalis pasibaige
                 /*node.addChildren(nodeFirst);
                 if(tokens.get(index+2).t == Lexeme.RPAREN){

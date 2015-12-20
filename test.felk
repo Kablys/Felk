@@ -1,4 +1,5 @@
 int factorial(int d,int h)[
+  int test:= f(1,2);
   int a:= (a+b)*d;
   int a:=factorial((a+b)*d,c());
   int c := (100*10*5+10/5);

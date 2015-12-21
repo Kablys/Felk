@@ -24,7 +24,7 @@ class Fun
   end
   attr_accessor :name, :type, :parameters
   def to_s 
-    out = "#{@type}\n#{@name}\n"
+    out = "#{@type} #{@name}\n"
     @parameters.each do |p|
       out << "\t#{p.to_s}\n"
     end
@@ -32,25 +32,59 @@ class Fun
   end
 end
 
-@types = %w(INT FLOAT STRING CHAR BOOL )
+@types = %w(INT FLOAT STRING CHAR BOOL VOID)
+@values = %w(NUMBER FLOATNUMBER CHARSET)
+@type_to_val = {'INT' => 'NUMBER',
+                'FLOAT' => 'FLOATNUMBER',
+                'STRING' => 'CHARSET'}
 @functions = []
 @variables = []
+@all_variables = []
 
 def check_return (block)
   if block.at_xpath('RETURN')
     return;
   else
- #   puts 'function ' + block.at_xpath('../IDENTIFIER')['src'].green + ' is missing ' + 'return'.red + ' statement'
+    puts 'function ' + block.at_xpath('../IDENTIFIER')['src'].green + ' is missing ' + 'return'.red + ' statement'
   end
 end
 
-def exp_check (element, type = '')
- # puts 'exp that should return ' + type.blue + ' to ' + element.parent.name
+def exp_check (element, expected_type = '')
+#  puts 'exp that should return ' + expected_type.blue + ' to ' + element.parent.name
+  #  VALUE checking
+  (@values - [@type_to_val[expected_type]]).each do |value|
+    val = element.xpath(".//#{value}") - element.xpath(".//FUNCTIONCAL//#{value}")
+    unless val.empty?
+      val.each do |v|
+        puts "expected values #{@type_to_val[expected_type].green}, got #{value.red}(#{v['src'].red})" 
+      end
+    end
+  end
+  # IDENTIFIER checking
+  id = element.xpath('.//IDENTIFIER') - element.xpath('.//FUNCTIONCAL//IDENTIFIER')
+  id.each do |i|
+    if type = is_variable?(i['src'])
+      unless type == expected_type
+        puts 'variables must be of type ' + expected_type.green + ', but ' + i['src'].red + ' is of the type ' + type.red
+      end
+    else
+      puts i['src'].red + ' is not defined in expression' 
+    end
+  end
+  # FUNCAL checking
+  element.xpath('.//FUNCTIONCAL').each do |f|
+    type = funcal_check(f)
+    if type == ''
+      next
+    elsif type != expected_type
+      puts f.at_xpath('IDENTIFIER')['src'].green + ' returns value of type ' + type.red + ' but expected ' + expected_type.green
+    end
+  end
 end
 
 #put inside for
 def exp_check2 (element)
-  # puts element
+  #puts element
   @same_type = nil
   @prev_var = nil
   element.xpath('*').each do |e|
@@ -60,7 +94,7 @@ def exp_check2 (element)
         @prev_var = e['src']
       else
         if @same_type != type
-          puts @prev_var.green + ' and ' + e['src'].green + ' types should be same(' + @same_type.red + ' ' + type.red + ' )'
+          puts @prev_va.green + ' and ' + e['src'].green + ' types should be same(' + @same_type.red + ' ' + type.red + ' )'
         end
       end
     else
@@ -70,11 +104,10 @@ def exp_check2 (element)
   end
 end
 
-#TODO not tested
 def is_function? (name)
   return false if @functions == []
   @functions.each do |f|
-    return f.parameters if f.name == name
+    return f if f.name == name
   end
   return false
 end
@@ -95,7 +128,6 @@ def add_function(f)
   end
 end
 
-#TODO not tested
 def is_variable? (name)
   return false if @variables == []
   @variables.each do |depth|
@@ -114,9 +146,13 @@ def add_variable(v, t = '')# t tam atvejui kai kintamasis nera explicit defined
     if t == ''
     @variables[depth] << Var.new(v.at_xpath('IDENTIFIER')['src'],
                           v['class'])
+    @all_variables << Var.new(v.at_xpath('IDENTIFIER')['src'],
+                          v['class'])
     else
     @variables[depth] << Var.new(v.at_xpath('IDENTIFIER')['src'],
                           t)
+    @all_variables << Var.new(v.at_xpath('IDENTIFIER')['src'],
+                              t)
     end
   else
     puts 'variable ' + v.at_xpath('IDENTIFIER')['src'].green + ' already exists'
@@ -126,29 +162,36 @@ end
 def assig_check(element)
   if element.at_xpath('./*[1]').name == 'TYPE'
     add_variable(element.at_xpath('TYPE'))
-    #exp_check(element.at_xpath('./EXPRESSION'), element.at_xpath('TYPE')['class'])
+    exp_check(element.at_xpath('./EXPRESSION'), element.at_xpath('TYPE')['class'])
+  elsif type = is_variable?(element.at_xpath('IDENTIFIER')['src'])
+    exp_check(element.at_xpath('./EXPRESSION'), type)
   else
-    exp_check(element.at_xpath('./EXPRESSION'))
+    puts 'variable' + element.at_xpath('IDENTIFIER')['src'].red + 'is not defined in assignment'
   end
 end
 
 def funcal_check(element)
-  if (par = is_function?(element.at_xpath('IDENTIFIER')['src']))
-    if element.xpath('EXPRESSION').count == par.count
-      element.xpath('EXPRESSION').each.with_index do |e, i|
-        exp_check(e, par[i].type)
+  if (f = is_function?(element.at_xpath('IDENTIFIER')['src']))
+    if element.xpath('EXPRESSION').count == f.parameters.count
+
+      element.xpath('EXPRESSION').each_with_index do |e, i|
+        exp_check(e, f.parameters[i-1].type)
       end
+      return f.type
     else
-      puts 'function ' + element.at_xpath('IDENTIFIER')['src'].green + ' needs ' + par.count.to_s.green + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s.red
+      puts 'function ' + element.at_xpath('IDENTIFIER')['src'].green + ' needs ' + f.parameters.count.to_s.green + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s.red
+      return f.type
     end
   else
     puts 'declaration of function ' + element.at_xpath('IDENTIFIER')['src'].red + ' not found'
+    return ''
   end
 end
 
 def while_check(element)
   #deal with expresion
-  exp_check2(element.at_xpath('*[1]'))
+  #exp_check2(element.at_xpath('*[1]'))
+  exp_check2(element.at_xpath('EXPRESSION/*'))
   check_block(element.at_xpath('BLOCK'))
 end
 
@@ -166,7 +209,7 @@ def for_check(element)
         end
       end
     else
-      puts e['src'].red + ' is not defined'
+      puts e['src'].red + ' is not defined in for loop'
       break
     end
   end
@@ -175,9 +218,8 @@ def for_check(element)
   @variables.pop(@variables.size - element.ancestors.count).to_s
 end
 
-#TODO test
 def if_check(element)
-  exp_check2(element.at_xpath('*[1]'))
+  exp_check2(element.at_xpath('EXPRESSION/*'))
   check_block(element.at_xpath('BLOCK'))
   if (el = element.at_xpath('ELSE'))
     check_block(el.at_xpath('BLOCK'))
@@ -185,10 +227,9 @@ def if_check(element)
 end
 
 def sout_check(element)
-  element.xpath('EXPRESSION').each { |e| exp_check(e)}
+  element.xpath('EXPRESSION').each { |e| exp_check(e, 'STRING')}
 end
 
-#TODO test
 def sin_check(element)
   if (type = is_variable?(element.at_xpath('IDENTIFIER')['src']))
     unless type == 'STRING'
@@ -204,7 +245,7 @@ def check_block (block)
     case element.name
     when 'ASSIG'
       assig_check(element)
-    when 'FUNCAL'
+    when 'FUNCTIONCAL'
       funcal_check(element)
     when 'TYPE'
       add_variable(element)
@@ -220,10 +261,12 @@ def check_block (block)
       sout_check(element)
     when 'RETURN'
       element.xpath('EXPRESSION').each do |e| 
-        if t = e.at_xpath('../../TYPE')
+        if t = e.at_xpath('../../../TYPE')
           exp_check(e, t['class'])
+        elsif e.at_xpath('../../../../MAIN')
+          puts 'Main has no return type'
         else
-          exp_check(e)
+          puts "functions' #{e.at_xpath('../../../IDENTIFIER')['src']} return type is void"
         end
       end
     else
@@ -253,23 +296,43 @@ end
 def check_funcall (f)
 end
 
-def patch (doc)
+def before_patch (doc)
   @types.each do |type|
     doc.xpath("//#{type}").each do |i| 
       i.name = 'TYPE'
       i['class'] = type
     end
   end
+  doc.xpath('//RPAREN').each do |e|
+    e.remove
+  end
   doc.xpath('//EXPRESSION').each do |e|
     if e.children.count == 0
       e.remove
+    else e.children.count == 1 && e.at_xpath('./EXPRESSION')
+      #e.replace e.children #TODO pridek sita i after patch
     end
+  end
+  doc.xpath('//TERM|//SIMPLEEXPRESSION').each do |t|
+    t.replace t.children
   end
   doc
 end
 
+def after_patch (doc)
+  doc.xpath('//EXPRESSION').each do |t|
+    t.replace t.children
+  end
+  doc.xpath('//FUNCTION').each do |f|
+    f['class'] = (f.at_xpath('TYPE').remove)['class']
+  end
+  doc.xpath('//FUNCTION|//FUNCTIONCAL|//TYPE').each do |f|
+    f['src'] = (f.at_xpath('IDENTIFIER').remove)['src']
+  end
+end
+
 doc = File.open('logfile.xml') { |f| Nokogiri::XML(f) }
-root = patch(doc.root)
+root = before_patch(doc.root)
 
 if (!(f = root.xpath('FUNCTION')).empty?)
   #p f
@@ -280,6 +343,11 @@ else
 end
 check_main(root.at_xpath('MAIN'))
 #Output
+root = after_patch(doc.root)
 doc = doc.to_xml( indent:2).gsub(/(\s*((<\/)|(<\?)).*)|[<>\/]/,'')
 doc = doc.gsub(/(src|class)="(.+?)"/) {|s| s = $2}
 File.write('output.txt', doc)
+puts 'Kintamieji:'.blue
+puts @all_variables
+puts "\nFunkcijos:".blue
+puts @functions

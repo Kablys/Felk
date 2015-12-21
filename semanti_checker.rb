@@ -77,12 +77,16 @@ def exp_check (element, expected_type = '')
     end
   end
   # FUNCAL checking
-  element.xpath('.//FUNCTIONCAL').each do |f|
-    type = funcal_check(f)
-    if type == ''
+  fun = element.xpath('.//FUNCTIONCAL') - element.xpath('.//FUNCTIONCAL//FUNCTIONCAL')
+  fun.each do |f|
+    #puts expected_type
+    #puts f
+    typef = funcal_check(f)
+    if typef == ''
       next
-    elsif type != expected_type
-      puts f.at_xpath('IDENTIFIER')['src'].green + ' returns value of type ' + type.red + ' but expected ' + expected_type.green
+    elsif typef != expected_type
+      puts expected_type.green
+      puts f.at_xpath('IDENTIFIER')['src'].green + ' returns value of type ' + typef.red + ' but expected ' + expected_type.green
       @error = true
     end
   end
@@ -126,7 +130,10 @@ def add_function(f)
                   var['class'])
   end
   depth = f.ancestors.count
-  @variables[depth] ||= []; @variables[depth] += param
+  @variables[depth] ||= []
+  param.each do |p|
+    @variables[depth] << p
+  end
   unless is_function?(f.at_xpath('IDENTIFIER')['src'])
     @functions << Fun.new(f.at_xpath('IDENTIFIER')['src'],
                           f.at_xpath('TYPE')['class'],
@@ -186,7 +193,9 @@ def funcal_check(element)
     if element.xpath('EXPRESSION').count == f.parameters.count
 
       element.xpath('EXPRESSION').each_with_index do |e, i|
-        exp_check(e, f.parameters[i-1].type)
+        #puts f
+        #puts i.to_s + f.parameters[i].type
+        exp_check(e, f.parameters[i].type)
       end
       return f.type
     else
@@ -278,7 +287,10 @@ def check_block (block)
       sout_check(element)
     when 'RETURN'
       element.xpath('EXPRESSION').each do |e| 
-        if t = e.at_xpath('../../../TYPE')
+        if t = e.at_xpath('../../../TYPE')#["not(@class='VOID')"]
+          #puts e
+          #puts t
+          #puts @functions
           exp_check(e, t['class'])
         elsif e.at_xpath('../../../../MAIN')
           puts 'Main has no return type'
@@ -293,15 +305,22 @@ def check_block (block)
       @error = true
     end
   end
-  return if @variables.empty?
+  return if @variables.count < 2
   @variables.pop(@variables.size - block.ancestors.count).to_s
 end
 
 def check_function (fun_defs)
   fun_defs.each do |f|
-    # puts f.name
     add_function(f)
-    check_return(f.at_xpath('BLOCK')) if f.at_xpath('TYPE')
+    @variables.clear
+  end
+  fun_defs.each do |f|
+    # puts f.name
+    #puts f
+    #p (is_function?(f.at_xpath('IDENTIFIER')['src']))
+    @variables << (is_function?(f.at_xpath('IDENTIFIER')['src'])).parameters
+    @all_variables << (is_function?(f.at_xpath('IDENTIFIER')['src'])).parameters
+    check_return(f.at_xpath('BLOCK'))# if f.at_xpath('TYPE')#["not(@class='VOID')"]
     check_block(f.at_xpath('BLOCK'))
     #p @variables
     @variables.clear
@@ -351,7 +370,7 @@ def after_patch (doc)
     f['src'] = (f.at_xpath('IDENTIFIER').remove)['src']
   end
 end
-
+`java -jar ./out/artifacts/TransMet.jar test.felk`
 doc = File.open('logfile.xml') { |f| Nokogiri::XML(f) }
 root = before_patch(doc.root)
 

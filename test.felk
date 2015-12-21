@@ -62,37 +62,45 @@
 ]
 */
 string beReturn(string text, int number, float dot)[
- something(number);
- int x;
+ //something(number);
+ int x1;
+ return "hello";
 ]
 
 
-int something(int x)[
-    return something(x - 1);
+//int something(int x)[
+//    return 123456;//something(x - 1);
+//]
+int xpl(string x3, float a)[
+    //int vienas := 5;
+    //float du := 5.0;
+    //int c:= xpl("asdf",test(1.2));
+ //   float x3;
+ //float tmp:= test(1.2);
+    return xpl("asdf",test(1.2));
+]
+float test(float x2)[
+    //int a;
+    return 1.2;
 ]
 
-int test(float x)[
-    return 1;
-]
+
 
 main()[
-  something(something(something(1)))
-  int nefloat := test(1);
-  int b := nefloat;
-  float f := something(nefloat);
-  int shouldBeInt := "not integer";
-  string isString := "string";
-  int a := something(1,2,3) + something();
-  systemIn(isString);
-  systemOut(a + "a");
-  a := 1 + notVariable;
-  while (a>b) [
-      int a;
-  ]
-  if (a<b) [
-      int ifEntered;
-  ]
-  else[
-      int elseBlock;
-  ]
+  ////xpl(1.3,test(1.2));
+  //something(something(something(1)));
+  ////int nefloat := test(1.0);
+  ////int b := nefloat;
+  //int b := 1;
+  ////int f := something(nefloat);
+  //string shouldBeInt := "not integer";
+  //string isString := "string";
+  //int a := something(1);//something(1,2,3) + something();
+  //systemIn(isString);
+  //systemOut(isString + "a");
+  //a := 1;// + notVariable;
+  //while (a>b) [
+  //    int a2;
+  //]
+
 ]

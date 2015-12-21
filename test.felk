@@ -74,6 +74,7 @@ int something(int x)[
 int test(float x)[
     return 1;
 ]
+
 main()[
   something(something(something(1)))
   int nefloat := test(1);

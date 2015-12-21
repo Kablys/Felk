@@ -32,6 +32,7 @@ class Fun
   end
 end
 
+@error = false
 @types = %w(INT FLOAT STRING CHAR BOOL VOID)
 @values = %w(NUMBER FLOATNUMBER CHARSET)
 @type_to_val = {'INT' => 'NUMBER',
@@ -46,6 +47,7 @@ def check_return (block)
     return;
   else
     puts 'function ' + block.at_xpath('../IDENTIFIER')['src'].green + ' is missing ' + 'return'.red + ' statement'
+    @error = true
   end
 end
 
@@ -57,6 +59,7 @@ def exp_check (element, expected_type = '')
     unless val.empty?
       val.each do |v|
         puts "expected values #{@type_to_val[expected_type].green}, got #{value.red}(#{v['src'].red})" 
+        @error = true
       end
     end
   end
@@ -66,9 +69,11 @@ def exp_check (element, expected_type = '')
     if type = is_variable?(i['src'])
       unless type == expected_type
         puts 'variables must be of type ' + expected_type.green + ', but ' + i['src'].red + ' is of the type ' + type.red
+        @error = true
       end
     else
       puts i['src'].red + ' is not defined in expression' 
+      @error = true
     end
   end
   # FUNCAL checking
@@ -78,6 +83,7 @@ def exp_check (element, expected_type = '')
       next
     elsif type != expected_type
       puts f.at_xpath('IDENTIFIER')['src'].green + ' returns value of type ' + type.red + ' but expected ' + expected_type.green
+      @error = true
     end
   end
 end
@@ -95,10 +101,12 @@ def exp_check2 (element)
       else
         if @same_type != type
           puts @prev_va.green + ' and ' + e['src'].green + ' types should be same(' + @same_type.red + ' ' + type.red + ' )'
+          @error = true
         end
       end
     else
       puts e['src'].red + ' is not defined'
+      @error = true
       break
     end
   end
@@ -125,6 +133,7 @@ def add_function(f)
                           param)
   else
     puts 'function ' + f.at_xpath('IDENTIFIER')['src'].green + ' already exists'
+    @error = true
   end
 end
 
@@ -156,6 +165,7 @@ def add_variable(v, t = '')# t tam atvejui kai kintamasis nera explicit defined
     end
   else
     puts 'variable ' + v.at_xpath('IDENTIFIER')['src'].green + ' already exists'
+    @error = true
   end
 end
 
@@ -167,6 +177,7 @@ def assig_check(element)
     exp_check(element.at_xpath('./EXPRESSION'), type)
   else
     puts 'variable' + element.at_xpath('IDENTIFIER')['src'].red + 'is not defined in assignment'
+    @error = true
   end
 end
 
@@ -180,10 +191,12 @@ def funcal_check(element)
       return f.type
     else
       puts 'function ' + element.at_xpath('IDENTIFIER')['src'].green + ' needs ' + f.parameters.count.to_s.green + ' arguments, got ' + element.xpath('EXPRESSION').count.to_s.red
+      @error = true
       return f.type
     end
   else
     puts 'declaration of function ' + element.at_xpath('IDENTIFIER')['src'].red + ' not found'
+    @error = true
     return ''
   end
 end
@@ -206,10 +219,12 @@ def for_check(element)
       else
         unless @same_type == type
           puts @prev_var.green + ' and ' + e.green + ' types should be same(' + @same_type.red + ' ' + type.red + ' )'
+          @error = true
         end
       end
     else
       puts e['src'].red + ' is not defined in for loop'
+      @error = true
       break
     end
   end
@@ -234,9 +249,11 @@ def sin_check(element)
   if (type = is_variable?(element.at_xpath('IDENTIFIER')['src']))
     unless type == 'STRING'
       puts "systemIn needs argument of type " + "string".green + " got" + type.red
+      @error = true
     end
   else
     puts "systemIn got undefined argument " + element.at_xpath('IDENTIFIER')['src'].red
+    @error = true
   end
 end
 
@@ -265,14 +282,18 @@ def check_block (block)
           exp_check(e, t['class'])
         elsif e.at_xpath('../../../../MAIN')
           puts 'Main has no return type'
+          @error = true
         else
           puts "functions' #{e.at_xpath('../../../IDENTIFIER')['src']} return type is void"
+          @error = true
         end
       end
     else
       puts 'unhandled statement: ' + element.name.yellow
+      @error = true
     end
   end
+  return if @variables.empty?
   @variables.pop(@variables.size - block.ancestors.count).to_s
 end
 
@@ -339,15 +360,37 @@ if (!(f = root.xpath('FUNCTION')).empty?)
   check_function(f)
   #check_main(f)
 else
-  puts 'No function definition'
+  #puts 'No function definition'
 end
 check_main(root.at_xpath('MAIN'))
 #Output
 root = after_patch(doc.root)
 doc = doc.to_xml( indent:2).gsub(/(\s*((<\/)|(<\?)).*)|[<>\/]/,'')
 doc = doc.gsub(/(src|class)="(.+?)"/) {|s| s = $2}
-File.write('output.txt', doc)
 puts 'Kintamieji:'.blue
 puts @all_variables
 puts "\nFunkcijos:".blue
 puts @functions
+
+if @error
+  puts 'Rastos klaidos, nesaugoma tarpine forma'
+  exit
+end
+
+doc2 = ''
+@fun_line = Hash.new('Error not declared')
+doc.each_line.with_index do |l,i|
+  if (l.split)[0] == 'FUNCTION'
+    @fun_line[(l.split)[2]] = i
+  elsif (l.split)[0] == 'FUNCTIONCAL' 
+    #puts (l.split)[1]
+    #puts @fun_line[(l.split)[1]]
+    doc2 << i.to_s + ' ' + l.sub((l.split)[1],
+                                  @fun_line[(l.split)[1]].to_s)
+    next
+  end
+   
+  doc2 << i.to_s + ' ' + l
+end
+puts doc2
+File.write('output.txt', doc)
